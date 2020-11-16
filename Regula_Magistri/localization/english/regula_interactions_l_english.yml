@@ -1,0 +1,16 @@
+﻿l_english:
+  regula_fascinare:0 "Fascinare Scheme"
+  regula_fascinare_action:0 "Charm"
+  regula_fascinare_desc:0 "Use the powers of the Regula Magistri to bend her to your will."
+  regula_fascinare_desc_general:0 ""Use the powers of the Regula Magistri to bring someone under your sway.""
+  regula_fascinare_interaction:0 "Fascinare"
+  regula_fascinare_interaction_desc:0 "Use the powers of the Regula Magistri to bend this character to your will."
+
+  scheme_interaction_tt_fascinare_approved:0 "Attempt to charm [recipient.GetShortUINameNoTooltip]."
+  fascinare_invalid:0 "I stop trying to charm [target.GetShortUIName|U] as this is no longer feasible."
+
+  I_HAVE_FASCINARE_COOLDOWN_ON_THIS_CHARACTER:1 "[TARGET_CHARACTER.GetShortUIName] is avoiding you. You can't get them alone."
+  START_FASCINARE:0 "Bring her under your control"
+  FASCINARE_SUCCESS_DESC:1 "Bend [TARGET_CHARACTER.GetShortUIName|U] to your will"
+  SCHEME_FASCINARE_THEIR_OPINION:0 "[target.GetTitledFirstNamePossessive] opinion of you: $VALUE|+0=-+$"
+  regula_fascinare_interaction_toast:0 "Fascinare Scheme Begun"

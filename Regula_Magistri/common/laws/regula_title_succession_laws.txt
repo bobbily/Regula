@@ -1,0 +1,351 @@
+﻿succession_gender_laws = {
+	default = male_preference_law
+	flag = succession_gender_laws
+# This file seems to overwrite the default laws.  They're copied below to avoid interferring with the AI.
+	male_only_law = {
+		can_title_have = {
+			can_title_have_law_general_trigger = yes
+		}
+		can_keep = {
+			faith = {
+				has_doctrine = doctrine_gender_male_dominated
+			}
+		}
+		can_pass = {
+			can_change_succession_law_trigger = yes
+		}
+		should_start_with = {
+			faith = {
+				has_doctrine = doctrine_gender_male_dominated
+				religion_tag = islam_religion
+			}
+		}
+		succession = {
+			gender_law = male_only
+		}
+		flag = men_can_have_multiple_spouses
+		flag = men_can_have_consorts
+		flag = no_female_commanders
+		
+		pass_cost = {
+			prestige = change_succession_law_prestige_cost
+		}
+		revoke_cost = {
+			prestige = change_succession_law_prestige_cost
+		}
+	}
+
+	male_preference_law = {
+		can_title_have = {
+			can_title_have_law_general_trigger = yes
+		}
+		can_keep = {
+			custom_description = {
+				text = change_law_male_preference_faith_requirement
+				faith = {
+					NOT = { has_doctrine = doctrine_gender_female_dominated }
+				}
+			}
+		}
+		can_pass = {
+			can_change_succession_law_trigger = yes
+		}
+		should_start_with = {
+			OR = {
+				faith = {
+					NOT = {
+						religion_tag = islam_religion
+					}
+					has_doctrine = doctrine_gender_male_dominated
+				}
+				has_realm_law = male_only_law # For when male_only_law ceases to be a legal option
+			}
+		}
+		succession = {
+			gender_law = male_preference
+		}
+		flag = men_can_have_multiple_spouses
+		flag = men_can_have_consorts
+		flag = no_female_commanders
+		
+		pass_cost = {
+			prestige = change_succession_law_prestige_cost
+		}
+		revoke_cost = {
+			prestige = change_succession_law_prestige_cost
+		}
+	}
+
+	equal_law = {
+		can_title_have = {
+			can_title_have_law_general_trigger = yes
+		}
+		can_keep = {
+			trigger_if = {
+				limit = {
+					OR = {
+						culture = culture:occitan
+						culture = culture:basque
+						culture = culture:aragonese
+						culture = culture:catalan
+					}
+					NOT = {
+						faith = { has_doctrine = doctrine_gender_equal }
+					}
+				}
+				culture = { has_innovation = innovation_visigothic_codes }
+			}
+			trigger_else = {
+				limit = {
+					NOT = {
+						OR = {
+							culture = culture:hausa
+							culture = culture:sumpa
+						}
+					}
+				}
+				faith = {
+					has_doctrine = doctrine_gender_equal
+				}
+			}
+		}
+		can_pass = {
+			can_change_to_equal_succession_law_trigger = yes
+		}
+		should_start_with = {
+			faith = {
+				has_doctrine = doctrine_gender_equal
+			}
+			NOT = { has_realm_law = female_only_law } # For when female_only_law ceases to be valid
+		}
+		succession = {
+			gender_law = equal
+		}
+		flag = men_can_have_multiple_spouses
+		flag = men_can_have_consorts
+		flag = women_can_have_multiple_spouses
+		flag = women_can_have_consorts
+		
+		pass_cost = {
+			prestige = change_succession_law_prestige_cost
+		}
+		revoke_cost = {
+			prestige = change_succession_law_prestige_cost
+		}
+
+		ai_will_do = {
+			if = {
+				limit = {
+					primary_title.tier > tier_county
+					has_culture = culture:basque
+				}
+				value = 2
+			}
+		}
+	}
+
+	female_preference_law = {
+		can_title_have = {
+			can_title_have_law_general_trigger = yes
+		}
+		can_keep = {
+			custom_description = {
+				text = change_law_female_preference_faith_requirement
+				faith = {
+					NOT = { has_doctrine = doctrine_gender_male_dominated }
+				}
+			}
+		}
+		should_start_with = {
+			OR = {
+				faith = {
+					has_doctrine = doctrine_gender_female_dominated
+				}
+				has_realm_law = female_only_law # For when male_only_law ceases to be a legal option
+			}
+		}
+		can_pass = {
+			can_change_succession_law_trigger = yes
+		}
+		succession = {
+			gender_law = female_preference
+		}
+		flag = women_can_have_multiple_spouses
+		flag = women_can_have_consorts
+		
+		pass_cost = {
+			prestige = change_succession_law_prestige_cost
+		}
+		revoke_cost = {
+			prestige = change_succession_law_prestige_cost
+		}
+	}
+
+	female_only_law = {
+		can_title_have = {
+			can_title_have_law_general_trigger = yes
+		}
+		can_keep = {
+			faith = {
+				has_doctrine = doctrine_gender_female_dominated
+			}
+		}
+		can_pass = {
+			can_change_succession_law_trigger = yes
+		}
+		succession = {
+			gender_law = female_only
+		}
+		flag = women_can_have_multiple_spouses
+		flag = women_can_have_consorts
+		
+		pass_cost = {
+			prestige = change_succession_law_prestige_cost
+		}
+		revoke_cost = {
+			prestige = change_succession_law_prestige_cost
+		}
+	}
+
+	succession_rel_head = {
+		same_faith_theocratic_succession_law = {
+			can_have = {
+				faith = {
+					religious_head = root
+					has_doctrine = doctrine_spiritual_head
+				}
+			}
+			succession = {
+				order_of_succession = theocratic
+				faith = same_faith
+				pool_character_config = pool_theocratic_succession
+			}
+		}
+		same_faith_succession_law = {
+			shown_in_encyclopedia = no
+			can_have = {
+				faith = {
+					religious_head = root
+					has_doctrine = doctrine_temporal_head
+				}
+			}
+			succession = {
+				faith = same_faith
+			}
+		}
+	}
+	#Regula gender succession law for the player. Male only inheritance, consorts allowed.
+	regula_magister_gender_law = {
+		can_title_have = {
+			can_title_have_law_general_trigger = yes
+		}
+		can_keep = {
+			is_independent_ruler = yes
+		}
+
+		can_pass = { #UPDATE - figure out what this does.
+			can_change_succession_law_trigger = yes
+		}
+		should_start_with = {
+			faith = {
+				has_doctrine = doctrine_concubine_regula #UPDATE - Assign this to something more core, when possible.
+				religion_tag = regula_religion
+			}
+		}
+		succession = {
+			gender_law = male_only
+		}
+		flag = elective_succession_law
+		flag = men_can_have_consorts
+		flag = no_male_commanders
+
+		pass_cost = {
+			prestige = change_succession_law_prestige_cost
+		}
+		revoke_cost = {
+			prestige = change_succession_law_prestige_cost
+		}
+	}
+	#Regula gender succession law for the vassals.  Female inheritance only.
+	regula_vassal_succession_law = {
+		can_title_have = {
+			can_title_have_law_general_trigger = yes
+		}
+		can_keep = {
+			root.top_liege = {
+				has_realm_law = regula_magister_gender_law
+			}
+		}
+		
+		can_have = {
+			custom_description = {
+	#				text = does_not_serve_magister_trigger
+				NOT = {
+					root = root.top_liege
+				}
+			}
+		}
+		can_pass = {
+			can_change_succession_law_trigger = yes
+			is_independent_ruler = no
+		}
+		should_start_with = {
+			root.top_liege = {
+				has_realm_law = regula_magister_gender_law
+			}
+		}
+		succession = {
+			gender_law = female_only
+		}
+		pass_cost = {
+			prestige = change_succession_law_prestige_cost
+		}
+		revoke_cost = {
+			prestige = change_succession_law_prestige_cost
+		}
+	}
+}
+
+
+
+# title_succession_laws = {
+# 	#Modified Tanistry
+# 	regula_elective_magister_succession_law = {
+# 			desc = regula_elective_magister_succession_law_desc
+# 	#		can_have = {
+# 	#			OR = {
+# 	#				has_government = feudal_government
+# 	#				has_government = tribal_government
+# 	#			}
+# 	#			highest_held_title_tier >= tier_county
+# 	#		}
+# 		can_title_have = {
+# 			can_title_have_law_general_trigger = yes
+# 		}
+# 		can_have = {
+# 			highest_held_title_tier >= tier_county
+# 		}
+# 		can_keep = {
+# 			custom_description = {
+# 				text = must_be_at_the_top_trigger
+# 				is_independent_ruler = yes
+# 			}
+# 		}
+# 		can_pass = { #UPDATE - figure out what this does.
+# 			can_change_succession_law_trigger = yes
+# 		}
+
+# 		succession = {
+# 			order_of_succession = election
+# 			election_type = gaelic_elective
+# 			gender_law = male_only
+# 		}
+
+# 		title_allegiance_opinion = 5
+# 		revoke_cost = {
+# 			prestige = change_title_succession_law_prestige_cost
+# 		}
+# 		pass_cost = {
+# 			prestige = change_title_succession_law_prestige_cost
+# 		}
+# 	}

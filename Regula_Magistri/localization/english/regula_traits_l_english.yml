@@ -1,0 +1,16 @@
+﻿l_english:
+	magister_trait_group:0 "Keeper of Souls"
+	magister_trait_group_desc:0 "The Keeper of Souls acts through this one."
+	magister_trait_group_character_desc:0 "The Keeper of Souls acts through this one."
+
+	trait_magister_trait_group:0 "Keeper of Souls"
+	trait_magister_trait_group_desc:0 "The Keeper of Souls acts through this one."
+	trait_magister_trait_group_character_desc:0 "The Keeper of Souls acts through this one."
+
+	trait_magister_1:0 "Cenobite"
+	trait_magister_1_desc:0 "This character has read from the Rules of the Master. They are more than they once were."
+	trait_magister_1_character_desc:0 "[ROOT.GetCharacter.GetFirstNameNoTooltip] has read from the Rules of the Master. They are more than they once were."
+
+	trait_mulsa:0 "Mulsa"
+	trait_mulsa_desc:0 "This woman has been touched by your power. Her words carry an echo of your will."
+	trait_mulsa_character_desc:0 "[ROOT.GetCharacter.GetFirstNameNoTooltip] has been touched by your power. Their eyes shine with purpose."

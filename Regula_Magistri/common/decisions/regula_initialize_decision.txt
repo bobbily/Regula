@@ -1,0 +1,54 @@
+﻿regula_initialize_decision = {
+	picture = "gfx/interface/illustrations/decisions/decision_major_religion.dds"
+	major = yes
+	title = regula_initialize_decision.t
+	desc = regula_initialize_decision_desc
+	selection_tooltip = regula_initialize_decision_tooltip
+
+
+	ai_check_interval = 0 #AI won't consider.
+
+	is_shown = {
+		is_ruler = yes
+		is_male = yes
+		is_ai = no
+		age >= 16
+		NOT = { has_global_variable = regula_initialized }
+	}
+
+#	cooldown = { years = 999 } #Not needed due to global variable. Failsafe.
+
+	is_valid = {
+		is_independent_ruler = yes
+	}
+
+	is_valid_showing_failures_only = {
+		is_available = yes
+	}
+
+	cost = {
+		gold = 300
+		prestige = 1000
+		piety = 500
+	}
+
+	
+	effect = {
+		custom_tooltip = "regula_initialize_decision_tooltip_effect"
+		set_global_variable = {
+			name = regula_initialized
+			value = yes
+		}
+		trigger_event = { 
+			id = regula_initialize_event.0001 
+			days = 30
+		} 
+	}
+
+	confirm_text = regula_initialize_decision_confirm.a
+
+	ai_will_do = {
+		base = 0
+	}
+}
+

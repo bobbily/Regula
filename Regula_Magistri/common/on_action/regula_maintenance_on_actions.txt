@@ -1,0 +1,12 @@
+﻿# Set inheritance laws quarterly.
+quarterly_playable_pulse = {
+	events = {
+		regula_vassal_event.0999 #Implement vassal realm law.
+	}
+}
+# Passes on the Magister traits.
+quarterly_playable_pulse = {
+	events = {
+		regula_initialize_event.0010
+	}
+}

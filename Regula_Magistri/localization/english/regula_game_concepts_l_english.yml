@@ -1,0 +1,8 @@
+﻿l_english:
+  game_concept_regula_fascinare_scheme:0 "$fascinare$"
+  game_concept_regula_fascinare_schemes:0 "Fascinare Schemes"
+  game_concept_regula_fascinare_scheme_desc:0 ""The $seduce$ is a [personal_scheme|E] that aims to entrance the [scheme_target|E].\nA multitude of factors determine the [success_chance|E], including opinion, trait compatibility and the availability of potential agents.\n\n$game_concept_fascinare_schemes$ are [secret_scheme_single|E].""
+  game_concept_regula_fascinare:0 "Fascinare"
+  game_concept_regula_fascinare_interaction:0 ""
+
+  

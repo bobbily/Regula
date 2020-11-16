@@ -1,0 +1,58 @@
+﻿
+###########################
+# ONGOING EVENTS
+###########################
+
+
+####################################################################
+# OUTCOME ON ACTIONS
+####################################################################
+
+############################
+# Fire Success event
+############################
+
+fascinare_success = {
+	first_valid = {
+		fascinare_outcome.2307 # Seduce rival/someone you dislike a lot
+		fascinare_outcome.2308 # Seduce close family member
+		fascinare_outcome.2306 # Spouse seduction
+	}
+	fallback = fascinare_generic_success
+	effect = {
+		root = {
+			add_achievement_variable = {
+				VARIABLE = achievement_seductive_variable
+				VALUE = 1
+			}
+		}
+	}
+}
+
+fascinare_generic_success = {
+	random_events = {
+		100 = fascinare_outcome.2301 # Go to the target's chambers
+#		150 = seduce_outcome.2302 # Sneak into target's court (long distance)
+		# 150 = seduce_outcome.2010 # Both Drunkards
+		# 100 = seduce_outcome.2020 # In the privy
+		# 150 = seduce_outcome.2030 # Both Gluttonous
+		# 100 = seduce_outcome.2040 # At the walls
+		# 150 = seduce_outcome.2050 # Both chaste, at least one married
+		# 150 = seduce_outcome.2303 # Gregarious target(and owner), gushing compliments
+		# 150 = seduce_outcome.2304 # Meet under the open sky (for hunters etc.)
+		# 100 = seduce_outcome.2305 # Love letter
+		# 100 = seduce_outcome.2309 # Sex scene is generated
+	}	
+}
+
+
+############################
+# Fire Failure event
+############################
+fascinare_failure = {
+	random_events = {
+		100 = fascinare_outcome.4001 # Standard rejection event, no discovery (kind rejection)
+		100 = fascinare_outcome.4005 # Standard rejection with reveal
+		# 50 = seduce_outcome.4003 # Hard reject & reveal (Disabled by Graceful Recovery)
+	}
+}

@@ -1,0 +1,11 @@
+﻿must_be_at_the_top_trigger = {
+	global = MUST_BE_INDEPENDENT
+}
+
+must_serve_magister_trigger = {
+	global = MUST_SERVE_MAGISTER
+}
+
+does_not_serve_magister_trigger = {
+	global = DOES_NOT_SERVE_MAGISTER
+}

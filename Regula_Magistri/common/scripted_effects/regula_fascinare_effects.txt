@@ -1,0 +1,83 @@
+﻿
+######################################################################
+# OUTCOME EFFECTS
+######################################################################
+
+fascinare_block_character_effect = {
+	if = {
+		limit = { root = scope:target }
+		custom_tooltip = fascinare_outcome.permanent_block
+
+		hidden_effect = {
+			add_opinion = {
+				target = $CHARACTER$
+				modifier = fascinare_permanent_blocker_opinion
+			}
+		}
+	}
+	else = {
+		add_opinion = {
+			target = $CHARACTER$
+			modifier = fascinare_permanent_blocker_opinion
+		}
+	}
+}
+
+fascinare_outcome_publicised_attempted_crimes_or_nothing_effect = {
+	$TARGET$ = {
+		#Grab everyone relevant who might be interested in the attempt.
+		every_close_family_member = { add_to_list = relevant_parties }
+		every_consort = {
+			limit = {
+				NOT = { is_in_list = relevant_parties }
+			}
+			add_to_list = relevant_parties
+		}
+		if = {
+			limit = {
+				exists = liege
+				liege = {
+					NOT = { is_in_list = relevant_parties }
+				}
+			}
+			add_to_list = relevant_parties
+		}
+		if = {
+			limit = {
+				exists = court_owner
+				court_owner = {
+					NOT = { is_in_list = relevant_parties }
+				}
+			}
+			add_to_list = relevant_parties
+		}
+		every_vassal = {
+			limit = {
+				NOT = { is_in_list = relevant_parties }
+			}
+			add_to_list = relevant_parties
+		}
+		every_relation = {
+			type = friend
+			limit = {
+				NOT = { is_in_list = relevant_parties }
+			}
+			add_to_list = relevant_parties
+		}
+		every_relation = {
+			type = lover
+			limit = {
+				NOT = { is_in_list = relevant_parties }
+			}
+			add_to_list = relevant_parties
+		}
+		$OWNER$ = {
+			every_close_family_member = {
+				limit = {
+					NOT = { is_in_list = relevant_parties }
+				}
+				add_to_list = relevant_parties
+			}
+		}
+	}
+}

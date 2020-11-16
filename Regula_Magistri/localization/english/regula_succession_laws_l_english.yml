@@ -1,0 +1,10 @@
+﻿l_english:
+  regula_magister_gender_law:0 "Hereditas Magistri"
+  regula_magister_gender_law_effects:0 "The flesh is weak, but your power is eternal. \n\n$EFFECT_LIST_BULLET$Women are disqualified from inheritance\n$EFFECT_LIST_BULLET$Women cannot inherit [claims|E]\n$EFFECT_LIST_BULLET$Male [rulers|E] can have concubines"
+  #regula_magister_elective_succession_law_desc:0 "Regula 5. Power flows from the Keeper of Souls to the compedita, and from them it shall return."
+  regula_vassal_succession_law:0 "Hereditas Compedita"
+  regula_vassal_succession_law_effects:0 "Only those open to your power may hold authority. \n\n$EFFECT_LIST_BULLET$Men are disqualified from inheritance\n$EFFECT_LIST_BULLET$Men cannot inherit [claims|E]" 
+	MUST_BE_INDEPENDENT:0 "The Keeper of Souls answers to no one."
+	MUST_SERVE_MAGISTER:0 "These rules constrain those touched by your power. Not you."
+  DOES_NOT_SERVE_MAGISTER:0 "This vassal is not sworn to you. Their people will not follow the Rules."
+

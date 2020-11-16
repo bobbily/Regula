@@ -1,0 +1,905 @@
+﻿# The outcome of a fascinare scheme.  Largely based on the seduction scheme.
+
+namespace = fascinare_outcome
+
+# NOTE: To set up a new scheme outcome, make sure that you make an event for the owner and one for the target, and add them to their relevant on_actions.
+
+
+# 0000-0999: Maintenance events
+# 1000-1999: Setup events
+# 2000-2999: Success events for scheme owner
+# 4000-4999: Failure events for scheme owner
+
+
+######################################################
+# MAINTENANCE EVENTS
+# 0000-0999
+######################################################
+
+#I am a player and there is a discovery chance. Do I want to take the risk?
+fascinare_outcome.0001 = { 
+	type = character_event
+	title = fascinare_outcome.0001.t
+	desc = {
+		desc = fascinare_outcome.0001.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:scheme.scheme_success_chance >= 60 }
+				desc = fascinare_outcome.0001.positive.desc
+			}
+			desc = fascinare_outcome.0001.negative.desc
+		}
+	}
+	theme = seduce_scheme
+	left_portrait = scope:target
+	widget = {
+		gui = "event_window_widget_scheme"
+		container = "custom_widgets_container"
+	}
+
+	immediate = {
+		scope:target = { liege = { save_scope_as = discoverer } }
+	}
+
+	option = {
+		name = fascinare_outcome.0001.a
+		custom_tooltip = fascinare_outcome.0001.a.tt
+		trigger_event = fascinare_outcome.0002 #Do the rolls!
+
+		stress_impact = {
+			craven = minor_stress_impact_gain
+		}
+	}
+
+	option = {
+		name = fascinare_outcome.0001.b
+		stress_impact = {
+			ambitious = minor_stress_impact_gain
+		}
+		scope:scheme = {
+			end_scheme = yes
+		}
+	}
+}	
+
+#Rolls success and discovery, and triggers on_actions (or sends "player's choice" event)
+fascinare_outcome.0002 = {
+	type = character_event
+
+	hidden = yes
+
+	immediate = {
+		#SUCCESS ROLL
+		random = {
+			chance = scope:scheme.scheme_success_chance
+
+			save_scope_value_as = {
+				name = scheme_successful
+				value = yes
+			}
+		}
+
+		#DISCOVERY ROLL
+		save_scope_value_as = {
+			name = discovery_chance
+			value = {
+				value = 100
+				subtract = scope:scheme.scheme_secrecy
+			}
+		}
+
+		random = {
+			chance = scope:discovery_chance
+			save_scope_value_as = {
+				name = scheme_discovered
+				value = yes
+			}
+		}
+
+		#FOR AI TARGETS, SEND ON_ACTIONS
+		if = {
+			limit = { scope:target = { is_ai = yes } }
+			if = {
+				limit = {
+					exists = scope:scheme_successful
+				}
+				trigger_event = {
+					on_action = fascinare_success
+				}
+			}
+			else = {
+				trigger_event = {
+					on_action = fascinare_failure
+				}
+			}
+		}
+		#FOR PLAYER CHARACTER, SEND CHOICE EVENT
+		else = {
+			scope:target = {
+				trigger_event = {
+					id = fascinare_outcome.0003
+				}
+			}
+		}
+	}
+}
+
+# Target acquires the mulsa trait through other means.
+fascinare_outcome.0004 = {
+	type = character_event
+	title = fascinare_outcome.0004.t
+	desc = fascinare_outcome.0004.desc
+	
+	theme = seduce_scheme
+	left_portrait = scope:target
+	#No scheme, no widget
+
+	option = {
+		name = fascinare_outcome.0004.a
+	}
+}
+
+#Target died
+fascinare_outcome.0005 = {
+	type = character_event
+	title = fascinare_outcome.0005.t
+	desc = fascinare_outcome.0005.desc
+	
+	theme = seduce_scheme
+	left_portrait = scope:target
+	#No scheme, no widget
+
+	option = {
+		name = fascinare_outcome.0005.a
+	}
+}
+
+######################################################
+# SUCCESS EVENTS FOR OWNER
+# 2000-2999
+######################################################
+
+# Default charm script.
+# fascinare_outcome.2301 = {
+# 	type = character_event
+# 	title = fascinare_outcome.2301.t
+# 	desc = fascinare_outcome.2301.desc
+	
+# 	theme = seduce_scheme
+# 	left_portrait = {
+# 		character = scope:target
+# 		animation = shock
+# 	}
+# 	widget = {
+# 		gui = "event_window_widget_scheme"
+# 		container = "custom_widgets_container"
+# 	}
+
+################# This section changes the likelihood of the scene appearing.
+# 	weight_multiplier = {
+# 		base = 0.5
+# 		modifier = { #More likely if you're in the same court
+# 			add = 0.7
+# 			seduction_target_is_close_trigger = yes
+# 		}
+# 		modifier = { #Less likely if you're the target's spouse
+# 			add = -0.2
+# 			scope:target = { is_spouse_of = root }
+# 		}
+# 	}
+	# weight_multiplier = {
+	# 	base = 0.5
+	# 	modifier = { #Much more likely if target is a hunter
+	# 		add = 2
+	# 		scope:target = { has_trait = lifestyle_hunter }
+	# 	}
+	# 	modifier = { #More likely if you're also a hunter!
+	# 		add = 1
+	# 		has_trait = lifestyle_hunter
+	# 	}
+	# 	modifier = {
+	# 		add = 0.5
+	# 		seduction_target_is_close_trigger = no
+	# 	}
+	# }
+
+#################
+
+# 	immediate = {
+# 		scope:target = {
+# 			if = {
+# 				limit = { root = { is_ai = no }	}
+# 				assign_quirk_effect = yes
+# 			}
+# 		}
+# 		scope:target = { #Adds trait, converts religion. Possibly scope:recipient.
+# 			add_trait = mulsa
+# 			set_character_faith = faith:regula_1
+# 		}
+#		play_music_cue = "mx_cue_seduction"
+# 	}
+
+# 	option = { #Finialize the action
+# 		name = fascinare_outcome.2301.a
+# 		flavor = fascinare_outcome.2301.a.tt 
+# 		ai_chance = {
+# 			base = 100
+# 		}
+# 	}
+
+# 	after = {
+# 		scope:target = {
+# 			trigger_event = seduce_outcome.3301
+# 		}
+# 		show_as_tooltip = {
+# 			scope:scheme = {
+# 				end_scheme = yes
+# 			}
+# 		}
+# 	}
+# }
+
+
+#Go to the target's chambers
+fascinare_outcome.2301 = {
+	type = character_event
+	title = fascinare_outcome.2301.t
+	desc = fascinare_outcome.2301.desc
+	
+	theme = seduce_scheme
+	left_portrait = {
+		character = scope:target
+		animation = shock
+	}
+	widget = {
+		gui = "event_window_widget_scheme"
+		container = "custom_widgets_container"
+	}
+	weight_multiplier = {
+		base = 0.5
+		modifier = { #More likely if you're in the same court
+			add = 0.7
+			seduction_target_is_close_trigger = yes
+		}
+		modifier = { #Less likely if you're the target's spouse
+			add = -0.2
+			scope:target = { is_spouse_of = root }
+		}
+	}
+	immediate = {
+		scope:target = {
+			if = {
+				limit = { root = { is_ai = no }	}
+				assign_quirk_effect = yes
+			}
+		}
+		scope:target = { #Adds trait, converts religion. Possibly scope:recipient.
+			add_trait = mulsa
+			set_character_faith = faith:regula_1
+		}
+		play_music_cue = "mx_cue_seduction"
+	}
+
+	option = { #Finialize the action
+		name = fascinare_outcome.2301.a
+		flavor = fascinare_outcome.2301.a.tt 
+		ai_chance = {
+			base = 100
+		}
+	}
+
+	after = {
+		scope:target = {
+			trigger_event = seduce_outcome.3301
+		}
+		show_as_tooltip = {
+			scope:scheme = {
+				end_scheme = yes
+			}
+		}
+	}
+}
+
+#Charm your spouse
+fascinare_outcome.2306 = {
+	type = character_event
+	title = fascinare_outcome.2306.t
+	desc = fascinare_outcome.2306.desc
+	
+	theme = seduce_scheme
+	left_portrait = {
+		character = scope:target
+		animation = shock
+	}
+	widget = {
+		gui = "event_window_widget_scheme"
+		container = "custom_widgets_container"
+	}
+
+	trigger = {
+		scope:target = {
+			is_spouse_of = root
+		}
+	}
+
+	weight_multiplier = {
+		base = 10
+	}
+
+	immediate = {
+		scope:target = {
+			if = {
+				limit = { root = { is_ai = no }	}
+				assign_quirk_effect = yes
+			}
+		}
+		scope:target = { #Adds trait, converts religion. Possibly scope:recipient.
+			add_trait = mulsa
+			set_character_faith = faith:regula_1
+		}
+		play_music_cue = "mx_cue_seduction"
+	}
+
+	option = { #Finialize the action
+		name = fascinare_outcome.2306.a
+		flavor = fascinare_outcome.2306.a.tt 
+		ai_chance = {
+			base = 100
+		}
+	}
+
+	after = {
+		scope:target = {
+			trigger_event = seduce_outcome.3301
+		}
+		show_as_tooltip = {
+			scope:scheme = {
+				end_scheme = yes
+			}
+		}
+	}
+}
+
+#Charming rival
+fascinare_outcome.2307 = {
+	type = character_event
+	title = fascinare_outcome.2307.t
+	desc = fascinare_outcome.2307.desc
+	
+	theme = seduce_scheme
+	left_portrait = {
+		character = scope:target
+		animation = beg
+	}
+	widget = {
+		gui = "event_window_widget_scheme"
+		container = "custom_widgets_container"
+	}
+	
+	trigger = {
+		OR = {
+			has_relation_rival = scope:target
+			opinion = {
+				target = scope:target
+				value < medium_negative_opinion
+			}
+			reverse_opinion = {
+				target = scope:target
+				value < medium_negative_opinion
+			}
+		}
+	}
+
+	immediate = {
+		remove_relation_rival = scope:target
+		scope:target = {
+			if = {
+				limit = { root = { is_ai = no }	}
+				assign_quirk_effect = yes
+			}
+		}
+		scope:target = { #Adds trait, converts religion.
+			add_trait = mulsa
+			add_trait = humble
+			set_character_faith = faith:regula_1
+			add_character_flag = {
+				flag = is_naked
+				days = 180
+			}
+		}
+		play_music_cue = "mx_cue_seduction"
+	}
+
+	option = { #Finialize the action
+		name = fascinare_outcome.2307.a
+				
+		ai_chance = {
+			base = 100
+		}
+	}
+
+	after = {
+		scope:target = {
+			trigger_event = seduce_outcome.3307
+			remove_character_flag = is_naked
+		}
+		show_as_tooltip = {
+			scope:scheme = {
+				end_scheme = yes
+			}
+		}
+	}
+}
+
+
+#Charming close family member
+fascinare_outcome.2308 = {
+	type = character_event
+	title = fascinare_outcome.2308.t
+	desc = fascinare_outcome.2308_desc
+
+	theme = seduce_scheme
+	left_portrait = {
+		character = scope:target
+		animation = shock
+	}
+	widget = {
+		gui = "event_window_widget_scheme"
+		container = "custom_widgets_container"
+	}
+	
+	trigger = {
+		is_close_or_extended_family_of = scope:target
+	}
+
+	immediate = {
+		scope:target = {
+			if = {
+				limit = { root = { is_ai = no }	}
+				assign_quirk_effect = yes
+			}
+		}
+		scope:target = { #Adds trait, converts religion.
+			add_trait = mulsa
+			set_character_faith = faith:regula_1
+		}
+		play_music_cue = "mx_cue_seduction"
+	}
+
+	option = { #Finialize the action
+		name = fascinare_outcome.2308.a
+				
+		ai_chance = {
+			base = 100
+		}
+	}
+
+	after = {
+		scope:target = {
+			trigger_event = seduce_outcome.3308
+		}
+		show_as_tooltip = {
+			scope:scheme = {
+				end_scheme = yes
+			}
+		}
+	}
+}
+
+##### This code is probably irrelevant, but may be useful in the future.
+# #Outcome using the sex scene generator.
+# #by Linnéa Thimrén
+# seduce_outcome.2309 = {
+# 	type = character_event
+# 	title = seduce_outcome.2309.t
+# 	desc = {
+# 		desc = seduce_outcome.2309.desc_opening
+# 		desc = seduce_outcome.2309.desc_ending
+# 	}
+	
+# 	theme = seduce_scheme
+# 	left_portrait = {
+# 		character = scope:target
+# 		animation = flirtation_left
+# 	}
+# 	widget = {
+# 		gui = "event_window_widget_scheme"
+# 		container = "custom_widgets_container"
+# 	}
+
+# 	trigger = {
+# 		NOR = {
+# 			has_trait = chaste
+# 			scope:target = { has_trait = chaste }
+# 		}
+# 	}
+
+# 	weight_multiplier = {
+# 		base = 0.5
+# 		modifier = {
+# 			add = 1
+# 			scope:target = { has_trait = lustful }
+# 		}
+# 		modifier = {
+# 			add = 1
+# 			has_trait = lustful
+# 		}
+# 		modifier = {
+# 			add = -2
+# 			OR = {
+# 				has_sexuality = asexual
+# 				scope:target = { has_sexuality = asexual }
+# 			}
+# 		}
+# 	}
+
+# 	immediate = {
+# 		hidden_effect = {
+# 			random = {
+# 				chance = 30
+# 				set_random_sex_scene_location_effect = yes
+# 				transfer_sex_scene_location_to_character_effect = { CHARACTER = scope:target }
+# 			}
+# 		}
+# 		#Either runs had_sex_with_effect or shows a tooltip of it (effect is always just run once per success):
+# 		owner_seduce_outcome_sex_effect = yes
+# 	}
+
+# 	option = { #Go for both consummation and relationship
+# 		name = seduce_outcome.2309.a
+# 		trigger = { seduce_outcome_become_lovers_trigger = yes } #Enabled if a player target said "lovers please" or target is AI
+		
+# 		owner_seduce_outcome_become_lovers_option_effects = yes
+
+# 		ai_chance = {
+# 			base = 100
+# 		}
+# 	}
+
+# 	option = { #I'm just here for the fun time!
+# 		name = seduce_outcome.2301.b
+# 		trigger = { seduce_outcome_just_sex_trigger = yes } #Blocks this option for AI owners if the target is a player who said "lovers please"
+
+# 		owner_seduce_outcome_just_sex_effects = yes
+
+# 		ai_chance = {
+# 			base = 0
+# 			ai_value_modifier = {
+# 				ai_greed = 0.25
+# 				ai_vengefulness = 0.25
+# 			}
+# 		}
+# 	}
+
+# 	after = {
+# 		scope:target = {
+# 			trigger_event = seduce_outcome.3309
+# 		}
+# 		show_as_tooltip = {
+# 			scope:scheme = {
+# 				end_scheme = yes
+# 			}
+# 		}
+# 	}
+# }
+
+######################################################
+# SUCCESS EVENTS FOR TARGET (mirror of owner's)
+# 3000-3999
+######################################################
+
+# Regula just uses the vanila versions of these.  The AI can't use the fascinare action.
+
+
+
+######################################################
+# FAILURE EVENTS FOR OWNER
+# 4000-4999
+######################################################
+
+# Failure without consequence
+fascinare_outcome.4001 = {
+	type = character_event
+	title = fascinare_outcome.4001.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:target = { relation_with_character_is_incestuous_in_my_faith_trigger = { CHARACTER = root } } }
+				desc = fascinare_outcome.4001.incest.desc
+			}
+			desc = fascinare_outcome.4001.regular.desc
+		}
+	}
+	
+	theme = seduce_scheme
+	left_portrait = {
+		character = scope:target
+		animation = paranoia
+	}
+	widget = {
+		gui = "event_window_widget_scheme"
+		container = "custom_widgets_container"
+	}
+	
+	trigger = {
+		OR = {
+			NOT = { exists = scope:scheme_discovered }
+			exists = scope:target_chose_nice_reject #Player chose this outcome
+		}
+	}
+
+	weight_multiplier = {
+		base = 0.75
+		modifier = {
+			reverse_opinion = {
+				target = scope:target
+				value >= high_positive_opinion
+			}
+			factor = 1.3
+		}
+		modifier = {
+			OR = {
+				has_relation_friend = scope:target
+				is_spouse_of = scope:target
+			}
+			factor = 1.3
+		}
+		modifier = { #Very unlikely if they don't dislike you
+			NOR = {
+				reverse_opinion = {
+					target = scope:target
+					value >= low_positive_opinion
+				}
+				AND = {
+					scope:target = { ai_compassion >= medium_positive_ai_value }
+					reverse_opinion = {
+						target = scope:target
+						value >= low_negative_opinion
+					}
+				}
+			}
+			factor = 0.1
+		}
+	}
+
+	immediate = {
+		scope:target = {
+			if = {
+				limit = { root = { is_ai = no }	}
+				assign_quirk_effect = yes
+			}
+		}
+	}
+
+	option = {
+		name = fascinare_outcome.4001.a
+
+		scope:target = { fascinare_cooldown_for_character_effect = { CHARACTER = scope:owner } }
+
+		scope:scheme = {
+			end_scheme = yes
+		}
+	}
+}
+
+# Failure with reveal. Not interrupted.
+fascinare_outcome.4003 = {
+	type = character_event
+	title = fascinare_outcome.4003.t
+	desc = {
+		random_valid = {
+			triggered_desc = { #They have a mean plot
+				trigger = {
+					scope:target = {
+						OR = {
+							opinion = {
+								target = root
+								value < 0
+							}
+							ai_honor <= low_negative_ai_value
+							ai_compassion <= low_negative_ai_value
+							ai_vengefulness >= low_positive_ai_value
+							has_trait = sadistic
+							has_trait = vengeful
+							has_trait = deceitful
+						}
+					}
+					NOR = {
+						has_trait = compassionate
+						has_trait = chaste
+						has_trait = zealous
+					}
+				}
+				desc = fascinare_outcome.4003.plot.desc
+			}
+			desc = fascinare_outcome.4003.regular.desc
+		}
+	}
+	theme = seduce_scheme
+	left_portrait = {
+		character = scope:target
+		animation = anger
+	}
+
+	widget = {
+		gui = "event_window_widget_scheme"
+		container = "custom_widgets_container"
+	}
+	
+	trigger = {
+		OR = {
+			#Regular conditions
+			reverse_opinion = { #Dislikes you
+				target = scope:target
+				value < 0
+			}
+			AND = { #Thinks that you're ugly
+				scope:target = { ai_compassion < medium_positive_ai_value }
+				attraction < 0
+			}
+			ai_values_divergence = { #Very different
+				target = scope:target
+				value >= high_ai_values_divergence
+			}
+			scope:target = { has_trait = chaste } #Chaste
+			scope:target = { #This is not honorable
+				trait_is_shunned_or_criminal_in_my_or_lieges_faith_trigger = { TRAIT = adulterer GENDER_CHARACTER = scope:target }
+				OR = {
+					ai_honor >= low_positive_ai_value
+					has_trait = zealous
+					has_trait = honest
+				}
+			}
+			#Was triggered by player choice
+			exists = scope:target_chose_mean_reject
+		}
+		NOT = { is_consort_of = scope:target }
+
+		#Disabled by Graceful Recovery Perk
+		NOT = { has_perk = graceful_recovery_perk }
+	}
+
+	weight_multiplier = {
+		base = 0.5
+		modifier = {
+			scope:target = { ai_vengefulness >= medium_positive_ai_value }
+			add = 1
+		}
+		modifier = {
+			scope:target = { ai_compassion < medium_positive_ai_value }
+			add = 1
+		}
+		modifier = {
+			has_relation_rival = scope:target
+			add = 2
+		}
+		modifier = {
+			has_trait = zealous
+			add = 1
+		}
+		modifier = {
+			#A fellow homo-/bisexual character will hesitate to call you out in public
+			scope:target = { relation_with_character_is_sodomy_in_my_or_lieges_faith_trigger = { CHARACTER = root } }
+			add = -0.5
+		}
+	}
+
+	immediate = { play_music_cue = "mx_cue_negative" }
+
+	option = {
+		name = {
+			text = fascinare_outcome.4003.a.plot
+			trigger = {
+				scope:target = {
+					OR = {
+						opinion = {
+							target = root
+							value < 0
+						}
+						ai_honor <= low_negative_ai_value
+						ai_compassion <= low_negative_ai_value
+						ai_vengefulness >= low_positive_ai_value
+						has_trait = sadistic
+						has_trait = vengeful
+						has_trait = deceitful
+					}
+				}
+				NOR = {
+					has_trait = compassionate
+					has_trait = chaste
+					has_trait = zealous
+				}
+			}
+		}
+		name = fascinare_outcome.4003.a.regular
+		if = {
+			limit = {
+				OR = {
+					scope:target = { is_landed = yes }
+					AND = {
+						exists = host
+						host = root
+					}
+				}
+			}
+			fascinare_outcome_publicised_attempted_crimes_or_nothing_effect = {
+				TARGET = scope:target
+				OWNER = scope:owner
+			}
+		}
+		else_if = {
+			limit = {
+				scope:target = {
+					exists = liege
+					NOT = { liege = scope:owner }
+				}
+			}
+			show_as_tooltip = {
+				fascinare_outcome_publicised_attempted_crimes_or_nothing_effect = {
+					TARGET = scope:target
+					OWNER = scope:owner
+				}
+			}
+			scope:target = { liege = { trigger_event = seduce_outcome.4900 } }
+		}
+
+		scope:target = { seduction_block_character_effect = { CHARACTER = scope:owner } }
+
+		scope:scheme = {
+			end_scheme = yes
+		}
+	}
+}
+
+
+# Failure with reveal. Discovered.
+fascinare_outcome.4005 = {
+	type = character_event
+	title = fascinare_outcome.4005.t
+	desc = fascinare_outcome.4005.desc
+	
+	theme = seduce_scheme
+
+	left_portrait = {
+		character = scope:target
+		animation = war_attacker
+	}
+	widget = {
+		gui = "event_window_widget_scheme"
+		container = "custom_widgets_container"
+	}
+
+	trigger = {
+		exists = scope:scheme_discovered
+		scope:target = {
+			is_landed = no
+			exists = liege
+		}
+	}
+
+	immediate = {
+		scope:target = { liege = { save_scope_as = target_liege } }
+	}
+
+	option = {
+		name = fascinare_outcome.4005.a
+
+		show_as_tooltip = {
+			fascinare_outcome_publicised_attempted_crimes_or_nothing_effect = {
+				TARGET = scope:target
+				OWNER = scope:owner
+			}
+		} #Is actually applied in 4900
+
+		scope:target = { fascinare_cooldown_for_character_effect = { CHARACTER = scope:owner } }
+		add_opinion = {
+			target = scope:owner
+			modifier = fascinare_discovered_cooldown_opinion
+		}
+		scope:scheme = {
+			end_scheme = yes
+		}
+		#Send "failed seduction attempt discovered" event to target's liege
+		scope:target_liege = { trigger_event = seduce_outcome.4900 }
+	}
+}

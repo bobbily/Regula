@@ -1,0 +1,3 @@
+﻿fascinare_cooldown = {
+	first_not = I_HAVE_FASCINARE_COOLDOWN_ON_THIS_CHARACTER
+}

@@ -1,0 +1,57 @@
+﻿l_english:
+ fascinare_outcome.permanent_block:0 "[owner.GetTitledFirstName] has seen a glimpse of my power. I'll never be able to get close to them now."
+ fascinare_outcome.cooldown:0 "[owner.GetTitledFirstName] is keeping their distance, for now."
+
+ fascinare_permanent_blocker_opinion:0 "Repelled my initial assault"
+ fascinare_discovered_cooldown_opinion:0 "Discovered attempting to charm them"
+ 
+ fascinare_outcome.0001.t:0 "Opportunity knocks"
+ fascinare_outcome.0001.desc:0 "[target.GetTitledFirstNamePossessive] is alone, and likely to remain that way for some time. The perfect opportunity to bring them under my will.\n\n"
+ fascinare_outcome.0001.positive.desc:0 "If I am to act I must move quickly. [discoverer.Custom2('NamePossessiveCharacterIntroduction', target)] may return at any moment."
+ fascinare_outcome.0001.negative.desc:0 "Still, I feel uneasy. There are many ways that this could go awry."
+ fascinare_outcome.0001.a:0 "[target.GetFirstNameNoTooltip] will be mine!"
+ fascinare_outcome.0001.a.tt:0 "I go ahead with my attempt to ensnare [target.GetTitledFirstName]"
+ fascinare_outcome.0001.b:0 "She is not worth the risk."
+
+ fascinare_outcome.0004.t:0 "My [target.Custom('LoverPetName_uppercase')]"
+ fascinare_outcome.0004.desc:0 "Blood rushing in my veins, it feels like an eternity has passed. [ROOT.Char.Custom2('RelationToMe', SCOPE.sC('target') )] lies kneeling at my feet, whispers of my will floating through her mind. My hold is weak at the moment, but she is eager to serve."
+ fascinare_outcome.0004.a:0 "And so my power grows."
+
+ fascinare_outcome.0005.t:0 "Slipped from my Grasp"
+ fascinare_outcome.0005.desc:0 "With the death of my [ROOT.Char.Custom2('RelationToMe', SCOPE.sC('target') )] [target.GetTitledFirstName], my plans have suffered a serious setback. I must reconsider my options."
+ fascinare_outcome.0005.a:0 "I will find another."
+
+
+ fascinare_outcome.2301.t:0 "My [target.Custom('LoverPetName_uppercase')]"
+ fascinare_outcome.2301.desc:0 "Blood rushing in my veins, it feels like an eternity has passed. My [ROOT.Char.Custom2('RelationToMe', SCOPE.sC('target') )] lies kneeling at my feet, whispers of my will floating through her mind. My hold is weak at the moment, but she is eager to serve."
+ fascinare_outcome.2301.a:0 "And so my power grows."
+ fascinare_outcome.2301.a.tt:0 "All shall kneel."
+ 
+
+ fascinare_outcome.2306.t:0 "The Perfect [ROOT.Char.Custom2('RelationToMe', SCOPE.sC('target'))|U]"
+ fascinare_outcome.2306.desc:0 "While our marriage may have been a political affair, I was not without affection for [target.GetTitledFirstName]. Still, attempting to hide my actions from her has grown tiresome. It is time for a change in our relationship."
+ fascinare_outcome.2306.a:0 "Let me show you some things, dearest."
+ 
+ fascinare_outcome.2307.t:0 "A bit of spice"
+ fascinare_outcome.2307.desc:0 "As I brought the switch down hard across her rump I thought of all the insults [target.GetTitledFirstName] had dealt me over the years, her cries a lovely counterpoint to the bitter memories. She was no great masochist, but the simple thought that she was following my will sent her into ecstasy.\n\nI could still feel her rage, coiled deep inside. My hooks were shallow yet, but more than enough to ensure her obedience. As she shuddered in orgasm I felt the rage slip, and subtly bolstered it. It was far too early for her to surrender. \n\nNot until until after she had betrayed everything and everyone that she once held dear."
+ fascinare_outcome.2307.a:0 "The reed that does not bend will surely be broken."
+ 
+ fascinare_outcome.2308.t:0 "My Beloved [ROOT.Char.Custom2('RelationToMeShort', SCOPE.sC('target'))|U]"
+ fascinare_outcome.2308_desc:0 "Our familial ties made it easy to get [target.GetTitledFirstName] alone. I felt a little guilt at abusing their trust so badly, but that was nothing compared to the rush of seeing her eyes fill with lust as she looked upon me. \n\nI snapped my fingers, and smiled approvingly as [target.GetTitledFirstName] sank to her knees. My only regret is that I can enslave her only the once."
+ fascinare_outcome.2308.a:0 "Closer than ever."
+
+
+ fascinare_outcome.4001.t:0 "Her will is stronger than it seemed"
+ fascinare_outcome.4001.incest.desc:0 "It begins well, with [target.GetTitledFirstName] soon staring vacantly forward. However, as soon as I started to thread my will into her thoughts she began to stir. All I could do was pretend that I'd come to ask about the family crest. \n\nI could see that she believed me not at all. She'll be wary now, and I'll not be able to approach her for some time."
+ fascinare_outcome.4001.regular.desc:0 "[target.GetFirstName] took far longer than expected to subdue, her mind stubbornly resisting my will. I stayed as long as I dared, then used what little influence I'd gained to weave together an afternoon of false memories. It is unlikely that she'll notice anything amiss."
+ fascinare_outcome.4001.a:0 "This is but a temporary setback."
+
+ fascinare_outcome.4003.t:0 "Outplayed"
+ seduce_outcome.4003.plot.desc:0 "[target.GetTitledFirstName] welcomes me with a mischievous smile, and [target.GetHerHis] eager hands immediately get to work on buttons and laces. Within a few heartbeats, I stand naked and shivering before [target.GetHerHim]. But when I attempt to return the favor, [target.GetFirstNameNoTooltip] pushes me away — and screams!\n\n"Guards! There is an intruder in my chambers! #EMP Guards!#!"\n\nBare as a newborn babe, I bolt across the room and crawl out the window."
+ seduce_outcome.4003.regular.desc:0 "As I made my climb up to [target.GetTitledFirstNamePossessive] window, [target.GetHerHis] shocked scream was not the welcome I had in mind! I have no time to stop [target.GetHerHim] before [target.GetSheHe] runs for the door and flings it open.\n\n"Help! Guards! There is an intruder in my chambers!"\n\nBefore this night gets any worse, I crawl back the way I came."
+ seduce_outcome.4003.a.plot:0 "The [target.Custom('InsultAdjective')] [target.Custom('InsultNoun')] will pay!"
+ seduce_outcome.4003.a.regular:0 "I may have misjudged [target.GetHerHis] eagerness."
+
+ fascinare_outcome.4005.t:0 "A major setback"
+ fascinare_outcome.4005.desc:0 "It begins well, with [target.GetTitledFirstName] soon staring vacantly forward. However, as I leaned forward to begin threading my will I knocked to the ground a cup of wine. Awareness returned at once to her eyes, and before I could act her voice was raised in fear.\n\n"Help! Guards! There is an intruder in my chambers!"\n\nI run as fast as I can, the sound of crashing steel not far behind."
+ fascinare_outcome.4005.a:0 "Rumours of my actions will surely spread."

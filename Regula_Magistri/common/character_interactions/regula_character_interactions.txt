@@ -1,0 +1,70 @@
+﻿# Start fascinare scheme.
+regula_fascinare_interaction = {
+	category = interaction_category_hostile
+	scheme = regula_fascinare
+	interface_priority = 150
+
+	cost = {
+		piety = 100
+	}
+
+	send_name = START_FASCINARE
+	common_interaction = yes
+	ignores_pending_interaction_block = yes
+
+	desc = regula_fascinare_interaction_desc
+
+	is_shown = {
+		scope:actor = {
+			has_trait = magister_trait_group
+		}
+		scope:recipient = {
+			is_adult = yes 
+			is_female = yes
+			NOR = {
+				has_trait = paelex
+				has_trait = mulsa
+				has_trait = contubernalis 
+				has_trait = orba
+			}
+			is_imprisoned = no
+		}
+	}
+
+	is_valid = {
+		scope:actor = { is_ai = no }
+		NOT = { scope:recipient = scope:actor }
+		scope:actor = {
+			has_trait = magister_trait_group
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			can_start_scheme = {
+				type = sway
+				target = scope:recipient
+			}
+		}
+	}
+
+	on_accept = {
+		scope:actor = {
+			hidden_effect = {
+				send_interface_toast = {
+					title = regula_fascinare_interaction_toast
+					left_icon = scope:actor
+					right_icon = scope:recipient
+
+					start_scheme = {
+						target = scope:recipient
+						type = regula_fascinare
+					}
+				}
+			}
+		}
+	}
+
+	auto_accept = yes
+
+}

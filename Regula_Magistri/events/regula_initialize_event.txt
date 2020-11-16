@@ -1,0 +1,103 @@
+﻿namespace = regula_initialize_event
+
+regula_initialize_event.0001 = {
+	type = character_event
+	title = regula_initialize_event.0001.t
+	desc = regula_initialize_event.0001.desc
+
+	theme = realm
+
+	right_portrait = {
+		character = root
+		animation = scheme
+	}
+
+	immediate = {
+		play_music_cue = "mx_cue_sacredrite"
+	}
+
+	option = {
+		name = regula_initialize_event.0001.a
+		add_trait = magister_1 #Is a scope:root required?
+
+		root = {
+			set_character_faith = faith:regula_1 #perhaps set_character_faith_with_conversion?
+			}
+
+		trigger_event = {
+			on_action = regula_initialize_start_response
+			}
+		}	# Become a magister
+	option = {
+		name = regula_initialize_event.0001.b	# Back out.
+	}
+}
+
+regula_initialize_event.0002 = {
+	type = character_event
+	title = regula_initialize_event.0002.t
+	desc = regula_initialize_event.0002.desc
+
+	theme = realm
+
+	left_portrait = {
+		character = root
+		animation = personality_bold
+	}
+
+	immediate = {
+		play_music_cue = "mx_cue_epic_sacral_moment"
+	}
+
+	option = {
+		name = regula_initialize_event.0002.a
+
+		root.capital_province.county = {
+			set_county_faith = root.faith 
+		}
+		add_realm_law = regula_magister_gender_law
+##### If allowing concubines to select next player character.		
+#		highest_held_title = { 
+#			add_title_law = regula_elective_succession_law
+#		}
+##### Preventing issues from gavelkind. Won't work if tribal (need work-around).
+# 		if = {
+# 			limit = {
+# 				OR = {
+# 					has_realm_law = confederate_partition_succession_law
+# 					has_realm_law = partition_succession_law
+# 				}
+# 			}
+# 			add_innovation = innovation_heraldry
+# 			add_realm_law = high_partition_succession_law
+# 		}
+# Implement vassal gender laws.
+		every_vassal = {
+			limit = {
+				highest_held_title_tier >= tier_county
+			}
+			add_realm_law = regula_vassal_succession_law
+		}
+		trigger_event = {
+			on_action = regula_initialize_complete_response
+		}
+	}
+}
+
+#Once more into the breach.
+regula_initialize_event.0010 = {
+	hidden = yes
+	type = character_event
+
+	trigger = {
+		is_male = yes
+		has_realm_law = regula_magister_gender_law
+		NOT = { has_trait = magister_trait_group }
+		}
+	immediate = {
+		add_trait = magister_1 #Is a scope:root required?
+		root = {
+			set_character_faith = faith:regula_1 #perhaps set_character_faith_with_conversion?
+		}
+	}
+}

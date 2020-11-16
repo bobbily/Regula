@@ -1,0 +1,10 @@
+﻿#Pass to the next generation
+on_death = {
+	if = {
+		limit = {
+			is_ai = no
+			exists = player_heir
+		}
+		events = {
+			regula_initialize_event.0010
+		}

@@ -1,0 +1,20 @@
+﻿namespace = regula_vassal_event
+
+# 0999. Vassal succession law maintenance.
+regula_vassal_event.0999 = {
+	hidden = yes
+	type = character_event
+
+	trigger = {
+	has_realm_law = regula_magister_gender_law
+	}
+
+	immediate = {
+		every_vassal = {
+			limit = {
+				highest_held_title_tier >= tier_county
+			}
+			add_realm_law = regula_vassal_succession_law
+		}
+	}
+}

@@ -1,0 +1,16 @@
+﻿use_fascinare_secrecy_trigger = {
+	scope:target = {
+		NOR = {
+			is_consort_of = scope:owner
+			is_courtier_of = scope:owner
+			is_ruler = yes
+		}
+		exists = liege
+		OR = {
+			is_consort_of = scope:target.liege
+			is_close_family_of = scope:target.liege
+			house = scope:target.house
+		}
+	}
+}
+

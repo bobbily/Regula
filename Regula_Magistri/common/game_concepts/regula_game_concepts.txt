@@ -1,0 +1,4 @@
+﻿regula_fascinare_scheme = {
+    alias = { regula_fascinare regula_fascinare_interaction }
+    parent = scheme
+}

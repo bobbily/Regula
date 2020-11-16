@@ -1,0 +1,759 @@
+﻿regula_fascinare = {
+	skill = diplomacy
+
+	cooldown = { months = 2 }
+	is_secret = yes
+	base_secrecy = 10
+	hostile = yes
+	uses_agents = yes
+	power_per_skill_point = 20
+	resistance_per_skill_point = 0
+	minimum_progress_chance = 35
+	maximum_progress_chance = 95
+	minimum_success_chance = 25
+	maximum_success_chance = 95
+	# Does not use Spymaster
+	spymaster_power_per_skill_point = 0
+	spymaster_resistance_per_skill_point = 0
+	
+	
+	allow = {
+		is_adult = yes
+		has_trait = magister_trait_group
+		is_ai = no
+		is_imprisoned = no
+		scope:target = { 
+			is_adult = yes 
+			is_female = yes
+			NOR = {
+				has_trait = paelex
+				has_trait = mulsa
+				has_trait = contubernalis 
+				has_trait = orba
+			}
+			is_imprisoned = no
+		}
+	
+		# Time-limited blocker
+		custom_description = {
+			text = fascinare_cooldown
+			object = scope:target
+
+			NOT = {
+				scope:target = {
+					has_opinion_modifier = {
+						modifier = fascinare_regular_cooldown_opinion
+						target = scope:owner
+					}
+				}
+			}
+		}
+
+
+		is_below_ai_lover_soft_cap_trigger = yes
+		trigger_if = {
+			limit = { is_ai = yes }
+			scope:target = {
+				is_below_ai_lover_soft_cap_trigger = yes
+				trigger_if = { # Block AI from seducing lowborn nobodies in the players court
+					limit = {
+						exists = liege
+						liege = { is_ai = no }
+						NOR = {
+							is_courtier_of = scope:owner
+							is_foreign_court_or_pool_guest_of = scope:owner
+						}
+					}
+					OR = {
+						is_lowborn = no
+						is_landed = yes
+					}
+				}
+				trigger_if = { #So players don't get spammed by AI seduction
+					limit = {
+						is_ai = no
+					}
+					NOT = {
+						any_targeting_scheme = {
+							scheme_type = seduce
+						}
+					}
+				}
+			}
+		}
+
+		NOT = { scope:owner = { has_character_flag = is_party_baron } } # The Party Baron wants friends, not lovers!
+	}
+
+	valid = {
+		NOT = { scope:target = { has_trait = incapable } }
+		is_imprisoned = no
+		scope:target = {
+			is_imprisoned = no
+		}
+	
+		scope:target = {
+			OR = {
+				exists = location
+				in_diplomatic_range = scope:owner
+			}
+		}
+	}	
+
+	use_secrecy = {
+		use_fascinare_secrecy_trigger = yes
+	}
+##### UPDATE - This doesn't work.  Need scope:recipient?
+	# valid_agent = {
+	# 	scope:actor = {
+	# 		faith = regula_1
+	# 	}
+	# }
+	
+	valid_agent = {
+	}
+
+	agent_join_chance = {
+		base = 0
+		
+		# Base Reluctance, including negative AI Energy
+		modifier = {
+			add = {
+				value = -20
+				if = {
+					limit = {
+						ai_energy < 0
+					}
+					add = {
+						value = ai_energy
+						multiply = 0.5
+					}
+				}
+			}
+			desc = BASE_RELUCTANCE
+		}
+
+		#Is Owner sending a gift in the invite interaction?
+		modifier = {
+			add = 10
+			exists = scope:gift
+			always = scope:gift
+			NOT = {
+				OR = {
+					scope:target = { is_parent_of = root }
+					root = { is_parent_of = scope:target }
+				}
+			}
+			desc = "SCHEME_WITH_GIFT"
+		}
+
+		#Target will never scheme against themselves
+		modifier = {
+			add = -1000
+			this = scope:target
+			desc = COMPASSIONATE_REASON #SCHEME_NOT_AGAINST_SELF
+		}
+		
+		#Target is not diplomatically available
+		modifier = {
+			add = -1000
+			is_diplomatically_available = no
+			desc = SCHEME_NOT_DIPLOMATICALLY_AVAILABLE
+		}
+
+		# Cowardice
+		modifier = {
+			trigger = {
+				ai_boldness < 0
+			}
+			add = {
+				value = ai_boldness
+			}
+			desc = SCHEME_I_AM_A_COWARD
+		}
+
+		#How much does Agent like Owner?
+		opinion_modifier = {
+			trigger = {
+				NOT = { this = scope:owner }
+			}
+			who = this
+			opinion_target = scope:owner
+			multiplier = 0.25
+			#step = 5
+			desc = SCHEME_MY_OPINION_OF_YOU
+		}
+	}
+
+	base_success_chance = {
+		base = 15
+
+		#Magister
+		#Diplomacy based
+		compare_modifier = {
+			desc = "sway_my_diplomacy"
+			target = scope:owner
+			value = diplomacy
+			multiplier = 2
+		}
+
+		modifier = { # Home Advantage perk bonus against own Courtiers and Guests
+			desc = SEDUCE_COURTIER_GUEST_PERK_BONUS
+			scope:owner = { has_perk = home_advantage_perk }
+			scope:target = {
+				OR = {
+					is_courtier_of = scope:owner
+					is_pool_guest_of = scope:owner
+					is_foreign_court_guest_of = scope:owner
+				}
+			}
+			add = home_advantage_perk_bonus
+		}		
+
+		#Beauty good
+		modifier = {
+			desc = "scheme_beauty_good_1"
+			scope:owner = { has_trait = beauty_good_1 }
+			add = 10
+		}
+		modifier = {
+			desc = "scheme_beauty_good_2"
+			scope:owner = { has_trait = beauty_good_2 }
+			add = 15
+		}
+		modifier = {
+			desc = "scheme_beauty_good_3"
+			scope:owner = { has_trait = beauty_good_3 }
+			add = 20
+		}
+
+		#Physique good
+		modifier = {
+			desc = "scheme_physique_good_1"
+			scope:owner = { has_trait = physique_good_1 }
+			add = 5
+		}
+		modifier = {
+			desc = "scheme_physique_good_2"
+			scope:owner = { has_trait = physique_good_2 }
+			add = 10
+		}
+		modifier = {
+			desc = "scheme_physique_good_3"
+			scope:owner = { has_trait = physique_good_3 }
+			add = 15
+		}
+
+		#Beauty bad
+		modifier = {
+			desc = "scheme_beauty_bad_1"
+			scope:owner = { has_trait = beauty_bad_1 }
+			add = -10
+		}
+		modifier = {
+			desc = "scheme_beauty_bad_2"
+			scope:owner = { has_trait = beauty_bad_2 }
+			add = -15
+		}
+		modifier = {
+			desc = "scheme_beauty_bad_3"
+			scope:owner = { has_trait = beauty_bad_3 }
+			add = -20
+		}
+
+		#Sexuality
+		modifier = {
+			desc = SCHEME_SEDUCE_WRONG_GENDER
+			scope:owner = {
+				NOR = {
+					is_attracted_to_gender_of = scope:target
+					has_perk = unshackled_lust_perk # Removed by the Unshackled Lust Perk
+				}
+			}
+			add = -25
+		}
+
+		#TARGET#
+
+		#Lustful/hedonist
+		modifier = {
+			desc = "SCHEME_REVELER"
+			scope:target = { has_trait = lifestyle_reveler }
+			add = 15
+		}
+		modifier = {
+			desc = "SCHEME_LUSTFUL_TRAIT"
+			scope:target = { has_trait = lustful }
+			add = 30
+		}
+
+		#Chaste/shy
+		modifier = {
+			desc = "SCHEME_CHASTE_TRAIT"
+			scope:target = { has_trait = chaste }
+			add = -20
+		}
+		modifier = {
+			desc = "SCHEME_SHY_TRAIT"
+			scope:target = { has_trait = shy }
+			add = -20
+		}
+
+		#Opinion of owner
+		opinion_modifier = {
+			desc = SCHEME_FASCINARE_THEIR_OPINION
+			who = scope:target
+			opinion_target = scope:owner
+			min = -25
+			max = 25
+			multiplier = 0.75
+		}
+
+		#Target is owner's spouse
+		modifier = { #
+			trigger = { scope:owner = { is_consort_of = scope:target } }
+			scope:target = {
+				NOT = { has_relation_rival = scope:owner }
+			}
+			add = 20
+			desc = "SCHEME_SEDUCE_SPOUSE_BONUS"
+		}		
+
+		#Trait similarity to owner
+		compatibility_modifier = {
+			who = scope:target
+			compatibility_target = scope:owner
+			min = -15
+			max = 30
+			multiplier = 2
+		}
+
+		#Rank tier difference (landed target/target whose liege doesn't care)
+		modifier = { #3 or more higher rank
+			trigger = { scope:owner = { NOT = { is_consort_of = scope:target } } } # Your spouse doesn't care if you're a different rank than them.
+			add = 40
+			desc = "HIGHER_RANK_THAN_SCHEME_TARGET"
+			scope:target = {
+				personal_scheme_success_compare_target_liege_tier_trigger = no
+				NOT = {
+					is_theocratic_lessee = yes
+				}
+			}
+			scope:owner = {
+				tier_difference = {
+					target = scope:target
+					value >= 3
+				}
+			}
+		}
+		modifier = { #2 higher rank
+			trigger = { scope:owner = { NOT = { is_consort_of = scope:target } } } # Your spouse doesn't care if you're a different rank than them.
+			add = 20
+			desc = "HIGHER_RANK_THAN_SCHEME_TARGET"
+			scope:target = {
+				personal_scheme_success_compare_target_liege_tier_trigger = no
+				NOT = {
+					is_theocratic_lessee = yes
+				}
+			}
+			scope:owner = {
+				tier_difference = {
+					target = scope:target
+					value = 2
+				}
+			}
+		}
+		modifier = { #1 higher rank
+			trigger = { scope:owner = { NOT = { is_consort_of = scope:target } } } # Your spouse doesn't care if you're a different rank than them.
+			add = 10
+			desc = "HIGHER_RANK_THAN_SCHEME_TARGET"
+			scope:target = {
+				personal_scheme_success_compare_target_liege_tier_trigger = no
+				NOT = {
+					is_theocratic_lessee = yes
+				}
+			}
+			scope:owner = {
+				tier_difference = {
+					target = scope:target
+					value = 1
+				}
+			}
+		}
+		modifier = { #1 lower rank
+			trigger = {
+				scope:owner = {
+					NOT = { is_consort_of = scope:target } # Your spouse doesn't care if you're a different rank than them.
+					NOT = { has_perk = subtle_desire_perk }
+				}
+			}
+			add = -15
+			desc = "LOWER_RANK_THAN_SCHEME_TARGET"
+			scope:target = {
+				personal_scheme_success_compare_target_liege_tier_trigger = no
+			}
+			scope:owner = {
+				tier_difference = {
+					target = scope:target
+					value = -1
+				}
+			}
+		}
+		modifier = { #2 lower rank
+			trigger = {
+				scope:owner = {
+					NOT = { is_consort_of = scope:target } # Your spouse doesn't care if you're a different rank than them.
+					NOT = { has_perk = subtle_desire_perk }
+				}
+			}
+			add = -30
+			desc = "LOWER_RANK_THAN_SCHEME_TARGET"
+			scope:target = {
+				personal_scheme_success_compare_target_liege_tier_trigger = no
+			}
+			scope:owner = {
+				tier_difference = {
+					target = scope:target
+					value = -2
+				}
+			}
+		}
+		modifier = { #3 or less lower rank
+			trigger = {
+				scope:owner = {
+					NOT = { is_consort_of = scope:target } # Your spouse doesn't care if you're a different rank than them.
+					NOT = { has_perk = subtle_desire_perk }
+				}
+			}
+			add = -60
+			desc = "LOWER_RANK_THAN_SCHEME_TARGET"
+			scope:target = {
+				personal_scheme_success_compare_target_liege_tier_trigger = no
+			}
+			scope:owner = {
+				tier_difference = {
+					target = scope:target
+					value <= -3
+				}
+			}
+		}
+
+		#Rank tier difference (unlanded character)
+		modifier = { #3 or more higher rank
+			trigger = { scope:owner = { NOT = { is_consort_of = scope:target } } } # Your spouse doesn't care if you're a different rank than them.
+			add = 50
+			desc = "HIGHER_RANK_THAN_SCHEME_TARGET_LIEGE"
+			scope:target = {
+				personal_scheme_success_compare_target_liege_tier_trigger = yes
+				NOT = {
+					is_theocratic_lessee = yes
+				}
+			}
+			scope:owner = {
+				tier_difference = {
+					target = scope:target.liege
+					value >= 3
+				}
+			}
+		}
+		modifier = { #2 higher rank
+			trigger = { scope:owner = { NOT = { is_consort_of = scope:target } } } # Your spouse doesn't care if you're a different rank than them.
+			add = 25
+			desc = "HIGHER_RANK_THAN_SCHEME_TARGET_LIEGE"
+			scope:target = {
+				personal_scheme_success_compare_target_liege_tier_trigger = yes
+				NOT = {
+					is_theocratic_lessee = yes
+				}
+			}
+			scope:owner = {
+				tier_difference = {
+					target = scope:target.liege
+					value = 2
+				}
+			}
+		}
+		modifier = { #1 higher rank
+			trigger = { scope:owner = { NOT = { is_consort_of = scope:target } } } # Your spouse doesn't care if you're a different rank than them.
+			add = 10
+			desc = "HIGHER_RANK_THAN_SCHEME_TARGET_LIEGE"
+			scope:target = {
+				personal_scheme_success_compare_target_liege_tier_trigger = yes
+				NOT = {
+					is_theocratic_lessee = yes
+				}
+			}
+			scope:owner = {
+				tier_difference = {
+					target = scope:target.liege
+					value = 1
+				}
+			}
+		}
+		modifier = { #1 lower rank
+			trigger = { scope:owner = { NOT = { is_consort_of = scope:target } } } # Your spouse doesn't care if you're a different rank than them.
+			add = -15
+			desc = "LOWER_RANK_THAN_SCHEME_TARGET_LIEGE"
+			scope:target = {
+				personal_scheme_success_compare_target_liege_tier_trigger = yes
+			}
+			scope:owner = {
+				tier_difference = {
+					target = scope:target.liege
+					value = -1
+				}
+			}
+		}
+		modifier = { #2 lower rank
+			trigger = { scope:owner = { NOT = { is_consort_of = scope:target } } } # Your spouse doesn't care if you're a different rank than them.
+			add = -30
+			desc = "LOWER_RANK_THAN_SCHEME_TARGET_LIEGE"
+			scope:target = {
+				personal_scheme_success_compare_target_liege_tier_trigger = yes
+			}
+			scope:owner = {
+				tier_difference = {
+					target = scope:target.liege
+					value = -2
+				}
+			}
+		}
+		modifier = { #3 or less lower rank
+			trigger = { scope:owner = { NOT = { is_consort_of = scope:target } } } # Your spouse doesn't care if you're a different rank than them.
+			add = -60
+			desc = "LOWER_RANK_THAN_SCHEME_TARGET_LIEGE"
+			scope:target = {
+				personal_scheme_success_compare_target_liege_tier_trigger = yes
+			}
+			scope:owner = {
+				tier_difference = {
+					target = scope:target.liege
+					value <= -3
+				}
+			}
+		}
+		#Extra rank bonus/penalty if target is arrogant/ambitious
+		modifier = {
+			trigger = { scope:owner = { NOT = { is_consort_of = scope:target } } } # No 'social climbing' if you're already their spouse!
+			desc = SCHEME_SOCIAL_CLIMBER_RANK_BONUS
+			add = 10
+			scope:target = {
+				OR = {
+					has_trait = arrogant
+					has_trait = ambitious
+					has_trait = greedy
+				}
+				NOT = {
+					is_theocratic_lessee = yes
+				}
+			}
+			OR = {
+				AND = {
+					scope:target = { personal_scheme_success_compare_target_liege_tier_trigger = yes }
+					scope:owner.highest_held_title_tier > scope:target.liege.highest_held_title_tier
+				}
+				AND = {
+					scope:target = { personal_scheme_success_compare_target_liege_tier_trigger = no }
+					scope:owner.highest_held_title_tier > scope:target.highest_held_title_tier
+				}
+			}
+		}
+		modifier = {
+			trigger = { scope:owner = { NOT = { is_consort_of = scope:target } } } # No 'social climbing' if you're already their spouse!
+			desc = SCHEME_SOCIAL_CLIMBER_RANK_PENALTY
+			add = -10
+			scope:target = {
+				OR = {
+					has_trait = arrogant
+					has_trait = ambitious
+					has_trait = greedy
+				}
+			}
+			OR = {
+				AND = {
+					scope:target = { personal_scheme_success_compare_target_liege_tier_trigger = yes }
+					scope:owner.highest_held_title_tier < scope:target.liege.highest_held_title_tier
+				}
+				AND = {
+					scope:target = { personal_scheme_success_compare_target_liege_tier_trigger = no }
+					scope:owner.highest_held_title_tier < scope:target.highest_held_title_tier
+				}
+			}
+		}
+	}
+
+	agent_success_chance = {
+		base = 0
+		first_valid = {
+			modifier = {
+				add = 50
+				is_spouse_of = scope:target
+				desc = "SCHEME_AGENT_IS_SPOUSE"
+			}
+			modifier = {
+				add = 50
+				has_relation_best_friend = scope:target
+				desc = "SCHEME_AGENT_IS_BEST_FRIEND"
+			}
+			modifier = {
+				add = 50
+				has_relation_guardian = scope:target
+				desc = "SCHEME_AGENT_IS_GUARDIAN"
+			}
+			modifier = {
+				add = 30
+				has_relation_friend = scope:target
+				desc = "SCHEME_AGENT_IS_FRIEND"
+			}
+			modifier = {
+				add = 30
+				is_concubine_of = scope:target
+				desc = "SCHEME_AGENT_IS_CONCUBINE"
+			}
+			modifier = {
+				add = 30
+				has_relation_lover = scope:target
+				desc = "SCHEME_AGENT_IS_LOVER"
+			}
+			modifier = {
+				add = 30
+				scope:target = {
+					is_ruler = yes
+				}
+				has_council_position = councillor_spymaster
+				scope:target.cp:councillor_spymaster = this
+				desc = "SCHEME_AGENT_IS_SPYMASTER"
+			}
+			modifier = {
+				add = 30
+				scope:target = {
+					is_ruler = no
+				}
+				has_council_position = councillor_spymaster
+				scope:target.liege.cp:councillor_spymaster = this
+				desc = "SCHEME_AGENT_IS_SPYMASTER_IN_MY_COURT"
+			}
+			modifier = {
+				add = 20
+				is_close_family_of = scope:target
+				desc = "SCHEME_AGENT_IS_CLOSE_KIN"
+			}
+			modifier = {
+				add = 15
+				is_powerful_vassal_of = scope:target
+				desc = "SCHEME_AGENT_IS_POWERFUL_VASSAL"
+			}
+			modifier = {
+				add = 15
+				is_extended_family_of = scope:target
+				desc = "SCHEME_AGENT_IS_EXTENDED_FAMILY"
+			}
+			modifier = {
+				add = 10
+				scope:target.liege = scope:owner
+				desc = "SCHEME_AGENT_IS_COURTIER_MY_COURT"
+			}
+			modifier = {
+				add = 10
+				is_ruler = no
+				scope:target.liege = this.liege
+				desc = "SCHEME_AGENT_IS_FELLOW_COURTIER"
+			}
+			modifier = {
+				add = 5
+				desc = "SCHEME_AGENT_IS_COURTIER"
+			}
+		}
+	}
+
+
+	on_ready = {
+		scheme_owner = {
+			#Do I want to proceed to a roll?
+			if = {
+				limit = {
+					is_ai = no
+					use_fascinare_secrecy_trigger = yes
+				}
+				trigger_event = fascinare_outcome.0001
+			}
+			#Jump straight to roll
+			else = {
+				trigger_event = fascinare_outcome.0002
+			}
+		}
+	}
+
+	on_invalidated = {
+		if = {
+			limit = {
+				scheme_target = { is_alive = no }
+			}
+			scheme_owner = {
+				trigger_event = fascinare_outcome.0005
+			}
+		}
+		#I am already their lover!
+		if = {
+			limit = {
+				NOT = { scheme_progress = 100 }
+				scheme_owner = { has_trait = mulsa }
+			}
+			scheme_owner = {
+				trigger_event = fascinare_outcome.0004
+			}
+		}
+		else_if = { #fallback invalidation
+			limit = {
+				OR = {
+					scope:owner = { is_imprisoned = yes }
+					scope:target = { is_imprisoned = yes }
+
+					scope:target = {
+						NOR = {
+							exists = location
+							in_diplomatic_range = scope:owner
+						}
+					}
+				}
+			}
+			scheme_owner = {
+				send_interface_message = {
+					type = event_generic_neutral
+					title = seduce
+					left_icon = scope:target
+					custom_tooltip = seduce_invalid
+				}
+			}
+		}
+	}
+
+	# on_start = {
+	# 	#Handle incest hard reject
+	# 	save_scope_as = scheme
+	# 	scheme_owner = { save_scope_as = owner }
+	# 	scheme_target = { save_scope_as = target }
+
+	# 	if = {
+	# 		limit = {
+	# 			scope:target = {
+	# 				is_close_or_extended_family_of = scope:owner
+	# 				NOT = { is_consort_of = scope:owner }
+	# 			}
+	# 		}
+	# 		scope:target = {
+	# 			trigger_event = {
+	# 				id = seduce_outcome.8101 #Hard reject event, ai weights on options determine yes/no
+	# 				days = { 7 14 }
+	# 			}
+	# 		}
+	# 	}
+	# }
+
+	on_monthly = {
+		save_scope_as = scheme
+		scheme_owner = { save_scope_as = owner }
+		scheme_target = { save_scope_as = target }
+	}
+	success_desc = "FASCINARE_SUCCESS_DESC"
+}
