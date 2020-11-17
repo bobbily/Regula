@@ -2,8 +2,8 @@
 
 A mind-control "Haremocracy" mod for Crusader Kings 3.
 
-[LoversLab Page] ()
-[Hypnopics-Collective Page] ()
+[LoversLab Page] (https://www.loverslab.com/topic/157067-mod-regula-magestri/)
+[Hypnopics-Collective Page] (https://hypnopics-collective.net/smf_forum/index.php?topic=24167.0)
 [Git-Hub] (https://github.com/bobbily/Regula)
 
 ## Overview
