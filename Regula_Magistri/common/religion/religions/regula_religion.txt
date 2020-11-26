@@ -1,8 +1,8 @@
 ﻿regula_religion = {
-	family = rf_pagan #Could be rf_regula, but would need to create definition, modifying core files.
+	family = rf_regula 
 	# alternate_start = { always = no } #UPDATE Should prevent seeding of the religion at start. Not sure if needed.
 	doctrine_background_icon = core_tenet_banner_eastern.dds 
-	doctrine = pagan_hostility_doctrine
+	doctrine = pagan_hostility_doctrine # Could be regula_hostility_doctrine, but that would require overwriting the hostility doctrine file, impact compatibility.
 	
 	#Main Group
 	doctrine = doctrine_spiritual_head
@@ -232,9 +232,9 @@
 			#can_demand_religious_conversion = no #UPDATE - May become necessary for balance purposes.
 
 			#Tenets
-			doctrine = tenet_divine_marriage
-			doctrine = tenet_carnal_exaltation
-			doctrine = tenet_ritual_celebrations #UPDATE - Will almost certainly need custom tenets
+			doctrine = tenet_regula_magister
+			doctrine = tenet_regula_devoted
+			doctrine = tenet_sacred_shadows
 		}
 	}
 }

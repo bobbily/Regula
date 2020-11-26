@@ -68,3 +68,316 @@ regula_fascinare_interaction = {
 	auto_accept = yes
 
 }
+
+### Make landed vassal a paelex.
+regula_make_paelex_interaction = {
+	category = interaction_category_diplomacy
+	desc = regula_make_paelex_interaction_desc
+	interface_priority = 20
+	# force_notification = yes ### UPDATE - These 3 lines may not be necessary.
+	# greeting = positive
+	# notification_text = REGULA_MAKE_PAELEX_INTERACTION_NOTIFICATION
+
+	is_shown = {
+		scope:actor = {
+			has_trait = magister_trait_group
+		}
+		scope:recipient = {
+			is_ai = yes
+			has_trait = devoted_trait_group
+			is_vassal_or_below_of = scope:actor
+			NOT = { scope:recipient = scope:actor }
+			NOR = {
+				has_trait = paelex
+				has_trait = domina
+				has_trait = contubernalis
+				has_trait = orba
+			}
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		scope:recipient = {
+			highest_held_title_tier >= tier_county
+			is_imprisoned = no #Will make alternate event for this.
+			# OR = {
+			# 	is_concubine = no  # UPDATE - Invalid text doesn't appear when target is someone else's concubine.
+			# 	is_concubine_of = scope:actor
+			# }
+		}
+	}
+
+	auto_accept = yes
+
+	on_accept = {
+		scope:recipient = {
+			remove_trait = mulsa
+		}
+		if = { # Redirect towards spouse event(s).
+			limit = {
+				scope:recipient = {
+					is_spouse_of = scope:actor
+				}
+			}
+			scope:recipient = { 
+				add_trait = domina 
+				remove_opinion = { # This modifier autoadds if the religion doesn't have the base concubines doctrine.
+					modifier = spouse_does_not_believe_in_concubines_opinion  
+					target = scope:actor
+				}
+			}
+			scope:actor = {
+				trigger_event = {
+					id = regula_paelex_event.2000
+				}
+			}
+		}
+		else = { # Default events.
+			regula_make_paelex_interaction_effect = yes
+			scope:recipient = { add_trait = paelex }
+			scope:actor = {
+				make_concubine = scope:recipient 
+				trigger_event = { 
+					on_action = regula_paelex_event_on_action
+				}
+			}
+		}
+	}
+	ai_will_do = {
+		base = 0
+	}
+}
+
+regula_promote_paelex_interaction = {
+	category = interaction_category_diplomacy
+	desc = regula_promote_paelex_interaction_desc
+	interface_priority = 60
+	
+
+	is_shown = {
+		scope:actor = {
+			has_trait = magister_trait_group
+			age >= 16
+		}
+		scope:recipient = {
+			is_ai = yes
+			has_trait = paelex
+			is_concubine_of = scope:actor
+			NOT = { scope:recipient = scope:actor }
+		}
+	}
+
+	cooldown = { months = 6 }
+
+	is_valid_showing_failures_only = {
+		scope:recipient = { 
+			is_diplomatically_available = yes 
+			is_imprisoned = no
+		}
+	}
+
+	auto_accept = yes
+
+	on_accept = {
+		scope:actor = {
+			if = { 
+				limit = {
+					is_married = yes 
+				}
+				regula_promote_paelex_divorce_effect = yes
+			}
+			marry = scope:recipient
+		}
+		scope:recipient = {
+			remove_trait = paelex
+			add_trait = domina
+			hidden_effect = {
+					remove_opinion = { # This modifier autoadds if the religion doesn't have the base concubines doctrine.
+					modifier = spouse_does_not_believe_in_concubines_opinion  
+					target = scope:actor
+				}
+			}
+		}
+	}	
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+regula_demote_domina_interaction = {
+	category = interaction_category_diplomacy
+	desc = regula_demote_domina_interaction_desc
+	interface_priority = 60
+
+	is_shown = {
+		scope:actor = {
+			has_trait = magister_trait_group
+		}
+		scope:recipient = {
+			is_ai = yes
+			has_trait = domina
+			is_spouse_of = scope:actor
+			is_concubine = no
+			NOT = { scope:recipient = scope:actor }
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		scope:recipient = { is_diplomatically_available = yes }
+	}
+
+	auto_accept = yes
+
+	on_accept = {
+		hidden_effect = {
+			scope:actor = {
+				divorce = scope:recipient
+				make_concubine = scope:recipient
+			}
+		}
+		scope:recipient = {
+			remove_trait = domina
+			add_trait = paelex
+		}
+		scope:actor = {
+			reverse_add_opinion = {
+				modifier = demoted_domina_opinion
+				target = scope:recipient
+			}
+		}
+	}	
+	ai_will_do = {
+		base = 0
+	}
+}
+
+regula_take_orba_interaction = {
+	category = interaction_category_diplomacy
+	desc = regula_take_orba_interaction_desc
+	interface_priority = 150
+
+	is_shown = {
+		scope:actor = {
+			has_trait = magister_trait_group
+		}
+		scope:recipient = {
+			is_ai = yes
+			has_trait = orba
+			NOT = { scope:recipient = scope:actor }
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		scope:recipient = {
+			highest_held_title_tier >= tier_county
+			is_imprisoned = no #Will make alternate event for this.
+			OR = {
+				is_concubine = no
+				is_consort_of = scope:actor
+			}
+		}
+	}
+
+
+	auto_accept = yes
+
+
+	on_accept = {
+		regula_make_paelex_interaction_effect = yes
+		scope:recipient = {
+			remove_trait = orba
+			add_trait = paelex
+		}
+		scope:actor = {
+			make_concubine = scope:recipient
+			add_piety = 50
+		}
+	}	
+	ai_will_do = {
+		base = 0
+	}
+}
+
+
+
+# regula_councillor_county_convert_interaction = {  ###UPDATE -  This needs a lot of work.
+# 	category = interaction_category_vassal
+	
+# 	auto_accept = yes
+# 	use_diplomatic_range = yes
+
+# 	desc = regula_councillor_county_convert_interaction_desc
+
+# 	is_shown = {
+# 		scope:actor = {
+# 			has_trait = magister_trait_group
+# 		}
+# 		scope:recipient = {
+# 			is_ai = yes
+# 			has_trait = devoted_trait_group
+# 			any_sub_realm_title = {
+# 				tier = tier_county
+# 				title_province = {
+# 					NOT = { faith = scope:actor.faith }
+# 					this = scope:recipient.capital_province
+# 					trigger_if = { #Their chaplain is not already converting the county
+# 						limit = {
+# 							exists = cp:councillor_court_chaplain
+# 							cp:councillor_court_chaplain = {
+# 								is_performing_council_task = task_conversion
+# 							}
+# 						}
+# 						scope:recipient.cp:councillor_court_chaplain = {
+# 							NOT = { councillor_task_target = prev }
+# 						}
+# 					}
+# 				}
+# 			}
+# 			# highest_held_title_tier > tier_barony
+# 			# NOR = {
+# 			# 		capital_county.faith = scope:actor.faith # This part works.
+# 			# 		scope:recipient.capital_county = {  
+# 			# 			is_target_of_council_task = task_conversion
+# 			#		}
+# 			#}
+# 		}
+# 		NOT = { scope:recipient = scope:actor }
+# 	}
+
+# 	is_valid_showing_failures_only = {
+# 		scope:recipient = {
+# 			is_imprisoned = no
+# 		}
+# 	}
+# ### UPDATE - The target language doesn't work (and crashes the game). scope:recipient?  Find secrets has the first scope as scope:actor.
+# 	on_accept = {
+# 		scope:recipient = {
+# 			cp:councillor_court_chaplain = {
+# 				set_council_task = {
+# 					task_type = task_conversion
+# 					target = any_sub_realm_title = { 
+# 						tier = county
+# 						title_province = {
+# 							this = scope:recipient.capital_province
+# 						}
+# 					}
+# #						scope:recipient.capital_county # just capital county?
+# 				}
+# 			}
+# 		}
+# 	}
+# 	### Update - add a toast that triggers when the county is converted.
+	
+# 	ai_potential = {
+# 		has_trait = magister_trait_group  #Ie. AI will not do.
+# 	}
+	
+# 	ai_target_quick_trigger = {
+# 		adult = yes
+# 	}
+	
+# 	ai_will_do = {
+# 		base = 0
+# 	}
+# }

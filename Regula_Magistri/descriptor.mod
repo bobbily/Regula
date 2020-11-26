@@ -1,4 +1,5 @@
-version="0.1"
+version="0.2"
+picture = "thumbnail.png"
 tags={
 	"Gameplay"
 	"Character Interactions"
@@ -7,4 +8,4 @@ tags={
 	"Schemes"
 }
 name="Regula Magistri"
-supported_version="1.1.3"
+supported_version="1.2.*"

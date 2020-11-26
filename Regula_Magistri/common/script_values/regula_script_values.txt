@@ -1,0 +1,14 @@
+﻿# Calculates the number of concubines with titles. Catches domina too.
+regula_num_landed_concubines = {
+	value = 0
+	every_consort= {
+		limit = {
+			highest_held_title_tier >= tier_county
+			OR = {
+				has_trait = paelex
+				has_trait = domina
+			}
+		}
+		add = 1
+	}
+}

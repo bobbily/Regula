@@ -1,0 +1,119 @@
+﻿regula_make_paelex_interaction_effect = {
+	scope:recipient = {
+			# Spouses, if any exist, are also furious.
+		if = {
+			limit = {
+				is_married = yes
+			}
+			if = {
+				limit = { 
+					NOT = { 
+						is_consort_of = scope:actor
+					}
+				}
+				every_spouse = {
+					show_as_tooltip = {
+						if = {   ### Husband understands if they're also Magesterian.
+							limit = { is_regula_trigger = no 
+							}
+							add_opinion = {
+								target = scope:actor
+								modifier = forced_spouse_concubine_marriage_opinion
+							}
+						}
+						divorce = scope:recipient # no additional opinion hit, no scripted effect
+					}
+					trigger_event = marriage_interaction.0041
+				}
+			}
+		}
+				
+		# Stealing concubines pisses the former concubinist off.
+		if = {
+			limit = {
+				is_concubine = yes
+				NOT = { is_concubine_of = scope:actor }
+			}
+			this.concubinist = {
+				show_as_tooltip = {
+					add_opinion = {
+						target = scope:actor
+						modifier = stole_concubine_opinion
+					}
+					remove_concubine = scope:recipient # no additional opinion hit, no scripted effect
+				}
+				trigger_event = marriage_interaction.0041
+			}
+		}
+
+		# Break any betrothals which may exist (without additional opinion penalties).
+		if = {
+			limit = { exists = betrothed }
+			betrothed = { trigger_event = marriage_interaction.0041 }
+			break_betrothal = betrothed
+		}
+
+		# Having concubines means they're now no longer yours.  ### I think this removes your concubine's concubines.
+		# if = {
+		# 	limit = { number_of_concubines > 0	}
+		# 	every_concubine = {
+		# 		scope:recipient = {
+		# 			remove_concubine = prev
+		# 		}
+		# 	}
+		# }
+	}
+}
+
+
+# Replaces wife.  If they're paelex/domina sticks them in the harem, otherwise gives normal divorce penalty.
+regula_promote_paelex_divorce_effect = {
+	every_spouse = { # If the PC has multiple wives then this will hit them all. Probably not an issue.
+#		save_temporary_scope_as = dominadivorcee
+		divorce = scope:actor # domina_divorcee
+		if = {
+			limit = {
+				OR = {
+					has_trait = domina
+					has_trait = paelex
+				}
+			}
+			scope:actor = {
+				make_concubine = prev
+			} # domina_divorcee
+			if = {
+				limit = { has_trait = domina }
+			}
+			remove_trait = domina
+			add_trait = paelex
+			add_opinion = {
+				modifier = demoted_domina_opinion
+				target = scope:actor
+			}
+		}
+		else = {
+			add_opinion = {
+				modifier = divorced_me_opinion
+				target = scope:actor
+			}
+			hidden_effect = {
+				if = {
+					limit = { 
+						has_opinion_modifier = {
+							modifier = spouse_does_not_believe_in_concubines_opinion
+							target = scope:actor 
+						}
+					}
+					remove_opinion = {
+						modifier = spouse_does_not_believe_in_concubines_opinion
+						target = target = scope:actor
+					}
+					add_opinion = {
+						modifier = spouse_does_not_believe_in_former_concubines_opinion
+						target = scope:actor
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,99 @@
+﻿on_piety_level_gain = {
+	effect = {
+		if = {
+			limit = {
+				has_trait = magister_trait_group
+			}
+			hidden_effect = { # Hidden to cut down on the toast gore. UPDATE - Ineffective.
+				remove_trait = magister_1
+				remove_trait = magister_2
+				remove_trait = magister_3
+				remove_trait = magister_4
+				remove_trait = magister_5
+			}
+			if = {
+				limit = {
+					piety_level = 1
+				}
+				add_trait = magister_2
+			}
+			if = {
+				limit = {
+					piety_level = 2
+				}
+				add_trait = magister_3
+			}
+			if = {
+				limit = {
+					piety_level = 3
+				}
+				add_trait = magister_4
+			}
+			if = {
+				limit = {
+					piety_level = 4
+				}
+				add_trait = magister_5
+			}
+			if = {
+				limit = {
+					piety_level = 5
+				}
+				add_trait = magister_6
+			}
+		}
+	}	
+}
+
+on_piety_level_loss = {
+	effect = {
+		if = {
+			limit = {
+				has_trait = magister_trait_group
+			}
+			remove_trait = magister_2
+			remove_trait = magister_3
+			remove_trait = magister_4
+			remove_trait = magister_5 
+			remove_trait = magister_6
+			hidden_effect = { #Hidden to cut down on the toast gore.
+				if = {
+					limit = {
+						piety_level = 0
+					}
+					add_trait = magister_1
+				}
+				if = {
+					limit = {
+						piety_level = 1
+					}
+					add_trait = magister_2
+				}
+				if = {
+					limit = {
+						piety_level = 2
+					}
+					add_trait = magister_3
+				}
+				if = {
+					limit = {
+						piety_level = 3
+					}
+					add_trait = magister_4
+				}
+				if = {
+					limit = {
+						piety_level = 4
+					}
+					add_trait = magister_5
+				}
+				if = {
+					limit = {
+						piety_level = 5
+					}
+					add_trait = magister_6
+				}
+			}
+		}
+	}
+}

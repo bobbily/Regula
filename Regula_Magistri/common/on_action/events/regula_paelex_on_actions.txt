@@ -1,0 +1,106 @@
+﻿regula_paelex_event_on_action = {
+	random_events = {
+		200 = regula_paelex_event.1000
+		100 = regula_paelex_event.1001
+	}
+}	
+
+regula_vassal_paelex_initiation_1 = {
+	random_events = {
+		200 = regula_paelex_event.1011 # Small boost.
+		200 = regula_paelex_event.1012 # Medium boost.
+		100 = regula_paelex_event.1013 # Large boost.		
+	}	
+}
+
+regula_vassal_paelex_initiation_2 = {
+	random_events = {
+		200 = regula_paelex_event.1021 # Medium boost.
+		100 = regula_paelex_event.1022 # Larger boost.
+	}	
+}
+
+
+regula_vassal_paelex_initiation_3 = {
+	random_events = {
+		300 = regula_paelex_event.1031 # Small boost.
+		200 = regula_paelex_event.1032 # Medium boost.
+		25 = regula_paelex_event.1033 # Immortality
+	}	
+}
+
+regula_vassal_paelex_mind_repair = {
+	effect = {
+		scope:recipient = {
+			if = {
+				limit = { has_trait = dull }
+				remove_trait = dull
+			}
+			else = {
+				if = {
+					limit = { has_trait = depressed_1 }
+					remove_trait = depressed_1
+				}
+				if = {
+					limit = { has_trait = depressed_genetic }
+					remove_trait = depressed_genetic
+				}
+				if = {
+					limit = { has_trait = lunatic_1 }
+					remove_trait = lunatic_1
+				}
+				if = {
+					limit = { has_trait = lunatic_genetic }
+					remove_trait = lunatic_genetic
+				}
+				if = {
+					limit = { has_trait = possessed_1 }
+					remove_trait = possessed_1
+				}
+				if = {
+					limit = { has_trait = possessed_genetic }
+					remove_trait = possessed_genetic
+				}
+				if = {
+					limit = { has_trait = early_great_pox }
+					remove_trait = early_great_pox
+				}
+				if = {
+					limit = { has_trait = lovers_pox }
+					remove_trait = lovers_pox
+				}
+				if = {
+					limit = { has_trait = drunkard}
+					remove_trait = drunkard
+				}
+				if = {
+					limit = { has_trait =  hashishiyah }
+					remove_trait = hashishiyah
+				}
+				if = {
+					limit = { has_trait = reclusive }
+					remove_trait = reclusive
+				}
+				if = {
+					limit = { has_trait = irritable }
+					remove_trait = irritable
+				}
+				if = {
+					limit = { has_trait = flagellant }
+					remove_trait = flagellant
+				}
+				if = {
+					limit = { has_trait = profligate }
+					remove_trait = profligate
+				}
+				if = {
+					limit = { has_trait = contrite }
+					remove_trait = contrite
+				}
+				if = {
+					limit = { has_trait = inappetetic }
+					remove_trait = inappetetic
+				}
+			}
+	}
+}

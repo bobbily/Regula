@@ -1,0 +1,7 @@
+﻿
+# Verifies religious status.
+is_regula_trigger = {
+	OR = {
+		faith = { religion_tag = regula_religion }
+	}
+}

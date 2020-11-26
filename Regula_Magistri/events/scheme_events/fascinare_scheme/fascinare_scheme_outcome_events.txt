@@ -30,7 +30,7 @@ fascinare_outcome.0001 = {
 			desc = fascinare_outcome.0001.negative.desc
 		}
 	}
-	theme = seduce_scheme
+	theme = faith
 	left_portrait = scope:target
 	widget = {
 		gui = "event_window_widget_scheme"
@@ -113,14 +113,14 @@ fascinare_outcome.0002 = {
 				}
 			}
 		}
-		#FOR PLAYER CHARACTER, SEND CHOICE EVENT
-		else = {
-			scope:target = {
-				trigger_event = {
-					id = fascinare_outcome.0003
-				}
-			}
-		}
+		# #FOR PLAYER CHARACTER, SEND CHOICE EVENT
+		# else = {
+		# 	scope:target = {
+		# 		trigger_event = {
+		# 			id = fascinare_outcome.0003
+		# 		}
+		# 	}
+		# }
 	}
 }
 
@@ -130,7 +130,7 @@ fascinare_outcome.0004 = {
 	title = fascinare_outcome.0004.t
 	desc = fascinare_outcome.0004.desc
 	
-	theme = seduce_scheme
+	theme = faith
 	left_portrait = scope:target
 	#No scheme, no widget
 
@@ -145,7 +145,7 @@ fascinare_outcome.0005 = {
 	title = fascinare_outcome.0005.t
 	desc = fascinare_outcome.0005.desc
 	
-	theme = seduce_scheme
+	theme = faith
 	left_portrait = scope:target
 	#No scheme, no widget
 
@@ -246,7 +246,8 @@ fascinare_outcome.2301 = {
 	title = fascinare_outcome.2301.t
 	desc = fascinare_outcome.2301.desc
 	
-	theme = seduce_scheme
+	theme = faith
+	
 	left_portrait = {
 		character = scope:target
 		animation = shock
@@ -275,7 +276,7 @@ fascinare_outcome.2301 = {
 		}
 		scope:target = { #Adds trait, converts religion. Possibly scope:recipient.
 			add_trait = mulsa
-			set_character_faith = faith:regula_1
+			set_character_faith = scope:root.faith
 		}
 		play_music_cue = "mx_cue_seduction"
 	}
@@ -306,7 +307,7 @@ fascinare_outcome.2306 = {
 	title = fascinare_outcome.2306.t
 	desc = fascinare_outcome.2306.desc
 	
-	theme = seduce_scheme
+	theme = faith
 	left_portrait = {
 		character = scope:target
 		animation = shock
@@ -335,14 +336,13 @@ fascinare_outcome.2306 = {
 		}
 		scope:target = { #Adds trait, converts religion. Possibly scope:recipient.
 			add_trait = mulsa
-			set_character_faith = faith:regula_1
+			set_character_faith = root.faith
 		}
 		play_music_cue = "mx_cue_seduction"
 	}
 
 	option = { #Finialize the action
 		name = fascinare_outcome.2306.a
-		flavor = fascinare_outcome.2306.a.tt 
 		ai_chance = {
 			base = 100
 		}
@@ -366,7 +366,7 @@ fascinare_outcome.2307 = {
 	title = fascinare_outcome.2307.t
 	desc = fascinare_outcome.2307.desc
 	
-	theme = seduce_scheme
+	theme = faith
 	left_portrait = {
 		character = scope:target
 		animation = beg
@@ -381,17 +381,22 @@ fascinare_outcome.2307 = {
 			has_relation_rival = scope:target
 			opinion = {
 				target = scope:target
-				value < medium_negative_opinion
+				value < high_negative_opinion
 			}
 			reverse_opinion = {
 				target = scope:target
-				value < medium_negative_opinion
+				value < high_negative_opinion
 			}
 		}
 	}
 
 	immediate = {
-		remove_relation_rival = scope:target
+		if = {
+			limit = { 
+				has_relation_rival = scope:target
+			}
+			remove_relation_rival = scope:target
+		}
 		scope:target = {
 			if = {
 				limit = { root = { is_ai = no }	}
@@ -401,7 +406,7 @@ fascinare_outcome.2307 = {
 		scope:target = { #Adds trait, converts religion.
 			add_trait = mulsa
 			add_trait = humble
-			set_character_faith = faith:regula_1
+			set_character_faith = root.faith
 			add_character_flag = {
 				flag = is_naked
 				days = 180
@@ -438,7 +443,7 @@ fascinare_outcome.2308 = {
 	title = fascinare_outcome.2308.t
 	desc = fascinare_outcome.2308_desc
 
-	theme = seduce_scheme
+	theme = faith
 	left_portrait = {
 		character = scope:target
 		animation = shock
@@ -461,7 +466,7 @@ fascinare_outcome.2308 = {
 		}
 		scope:target = { #Adds trait, converts religion.
 			add_trait = mulsa
-			set_character_faith = faith:regula_1
+			set_character_faith = root.faith
 		}
 		play_music_cue = "mx_cue_seduction"
 	}
@@ -611,7 +616,7 @@ fascinare_outcome.4001 = {
 		}
 	}
 	
-	theme = seduce_scheme
+	theme = faith
 	left_portrait = {
 		character = scope:target
 		animation = paranoia
@@ -682,174 +687,174 @@ fascinare_outcome.4001 = {
 	}
 }
 
-# Failure with reveal. Not interrupted.
-fascinare_outcome.4003 = {
-	type = character_event
-	title = fascinare_outcome.4003.t
-	desc = {
-		random_valid = {
-			triggered_desc = { #They have a mean plot
-				trigger = {
-					scope:target = {
-						OR = {
-							opinion = {
-								target = root
-								value < 0
-							}
-							ai_honor <= low_negative_ai_value
-							ai_compassion <= low_negative_ai_value
-							ai_vengefulness >= low_positive_ai_value
-							has_trait = sadistic
-							has_trait = vengeful
-							has_trait = deceitful
-						}
-					}
-					NOR = {
-						has_trait = compassionate
-						has_trait = chaste
-						has_trait = zealous
-					}
-				}
-				desc = fascinare_outcome.4003.plot.desc
-			}
-			desc = fascinare_outcome.4003.regular.desc
-		}
-	}
-	theme = seduce_scheme
-	left_portrait = {
-		character = scope:target
-		animation = anger
-	}
+# Critical failure. Outplayed.
+# fascinare_outcome.4003 = {
+# 	type = character_event
+# 	title = fascinare_outcome.4003.t
+# 	desc = {
+# 		random_valid = {
+# 			triggered_desc = { #They have a mean plot
+# 				trigger = {
+# 					scope:target = {
+# 						OR = {
+# 							opinion = {
+# 								target = root
+# 								value < 0
+# 							}
+# 							ai_honor <= low_negative_ai_value
+# 							ai_compassion <= low_negative_ai_value
+# 							ai_vengefulness >= low_positive_ai_value
+# 							has_trait = sadistic
+# 							has_trait = vengeful
+# 							has_trait = deceitful
+# 						}
+# 					}
+# 					NOR = {
+# 						has_trait = compassionate
+# 						has_trait = chaste
+# 						has_trait = zealous
+# 					}
+# 				}
+# 				desc = fascinare_outcome.4003.plot.desc
+# 			}
+# 			desc = fascinare_outcome.4003.regular.desc
+# 		}
+# 	}
+# 	theme = seduce_scheme
+# 	left_portrait = {
+# 		character = scope:target
+# 		animation = anger
+# 	}
 
-	widget = {
-		gui = "event_window_widget_scheme"
-		container = "custom_widgets_container"
-	}
+# 	widget = {
+# 		gui = "event_window_widget_scheme"
+# 		container = "custom_widgets_container"
+# 	}
 	
-	trigger = {
-		OR = {
-			#Regular conditions
-			reverse_opinion = { #Dislikes you
-				target = scope:target
-				value < 0
-			}
-			AND = { #Thinks that you're ugly
-				scope:target = { ai_compassion < medium_positive_ai_value }
-				attraction < 0
-			}
-			ai_values_divergence = { #Very different
-				target = scope:target
-				value >= high_ai_values_divergence
-			}
-			scope:target = { has_trait = chaste } #Chaste
-			scope:target = { #This is not honorable
-				trait_is_shunned_or_criminal_in_my_or_lieges_faith_trigger = { TRAIT = adulterer GENDER_CHARACTER = scope:target }
-				OR = {
-					ai_honor >= low_positive_ai_value
-					has_trait = zealous
-					has_trait = honest
-				}
-			}
-			#Was triggered by player choice
-			exists = scope:target_chose_mean_reject
-		}
-		NOT = { is_consort_of = scope:target }
+# 	trigger = {
+# 		OR = {
+# 			#Regular conditions
+# 			reverse_opinion = { #Dislikes you
+# 				target = scope:target
+# 				value < 0
+# 			}
+# 			AND = { #Thinks that you're ugly
+# 				scope:target = { ai_compassion < medium_positive_ai_value }
+# 				attraction < 0
+# 			}
+# 			ai_values_divergence = { #Very different
+# 				target = scope:target
+# 				value >= high_ai_values_divergence
+# 			}
+# 			scope:target = { has_trait = chaste } #Chaste
+# 			scope:target = { #This is not honorable
+# 				trait_is_shunned_or_criminal_in_my_or_lieges_faith_trigger = { TRAIT = adulterer GENDER_CHARACTER = scope:target }
+# 				OR = {
+# 					ai_honor >= low_positive_ai_value
+# 					has_trait = zealous
+# 					has_trait = honest
+# 				}
+# 			}
+# 			#Was triggered by player choice
+# 			exists = scope:target_chose_mean_reject
+# 		}
+# 		NOT = { is_consort_of = scope:target }
 
-		#Disabled by Graceful Recovery Perk
-		NOT = { has_perk = graceful_recovery_perk }
-	}
+# 		#Disabled by Graceful Recovery Perk
+# 		NOT = { has_perk = graceful_recovery_perk }
+# 	}
 
-	weight_multiplier = {
-		base = 0.5
-		modifier = {
-			scope:target = { ai_vengefulness >= medium_positive_ai_value }
-			add = 1
-		}
-		modifier = {
-			scope:target = { ai_compassion < medium_positive_ai_value }
-			add = 1
-		}
-		modifier = {
-			has_relation_rival = scope:target
-			add = 2
-		}
-		modifier = {
-			has_trait = zealous
-			add = 1
-		}
-		modifier = {
-			#A fellow homo-/bisexual character will hesitate to call you out in public
-			scope:target = { relation_with_character_is_sodomy_in_my_or_lieges_faith_trigger = { CHARACTER = root } }
-			add = -0.5
-		}
-	}
+# 	weight_multiplier = {
+# 		base = 0.5
+# 		modifier = {
+# 			scope:target = { ai_vengefulness >= medium_positive_ai_value }
+# 			add = 1
+# 		}
+# 		modifier = {
+# 			scope:target = { ai_compassion < medium_positive_ai_value }
+# 			add = 1
+# 		}
+# 		modifier = {
+# 			has_relation_rival = scope:target
+# 			add = 2
+# 		}
+# 		modifier = {
+# 			has_trait = zealous
+# 			add = 1
+# 		}
+# 		modifier = {
+# 			#A fellow homo-/bisexual character will hesitate to call you out in public
+# 			scope:target = { relation_with_character_is_sodomy_in_my_or_lieges_faith_trigger = { CHARACTER = root } }
+# 			add = -0.5
+# 		}
+# 	}
 
-	immediate = { play_music_cue = "mx_cue_negative" }
+# 	immediate = { play_music_cue = "mx_cue_negative" }
 
-	option = {
-		name = {
-			text = fascinare_outcome.4003.a.plot
-			trigger = {
-				scope:target = {
-					OR = {
-						opinion = {
-							target = root
-							value < 0
-						}
-						ai_honor <= low_negative_ai_value
-						ai_compassion <= low_negative_ai_value
-						ai_vengefulness >= low_positive_ai_value
-						has_trait = sadistic
-						has_trait = vengeful
-						has_trait = deceitful
-					}
-				}
-				NOR = {
-					has_trait = compassionate
-					has_trait = chaste
-					has_trait = zealous
-				}
-			}
-		}
-		name = fascinare_outcome.4003.a.regular
-		if = {
-			limit = {
-				OR = {
-					scope:target = { is_landed = yes }
-					AND = {
-						exists = host
-						host = root
-					}
-				}
-			}
-			fascinare_outcome_publicised_attempted_crimes_or_nothing_effect = {
-				TARGET = scope:target
-				OWNER = scope:owner
-			}
-		}
-		else_if = {
-			limit = {
-				scope:target = {
-					exists = liege
-					NOT = { liege = scope:owner }
-				}
-			}
-			show_as_tooltip = {
-				fascinare_outcome_publicised_attempted_crimes_or_nothing_effect = {
-					TARGET = scope:target
-					OWNER = scope:owner
-				}
-			}
-			scope:target = { liege = { trigger_event = seduce_outcome.4900 } }
-		}
+# 	option = {
+# 		name = {
+# 			text = fascinare_outcome.4003.a.plot
+# 			trigger = {
+# 				scope:target = {
+# 					OR = {
+# 						opinion = {
+# 							target = root
+# 							value < 0
+# 						}
+# 						ai_honor <= low_negative_ai_value
+# 						ai_compassion <= low_negative_ai_value
+# 						ai_vengefulness >= low_positive_ai_value
+# 						has_trait = sadistic
+# 						has_trait = vengeful
+# 						has_trait = deceitful
+# 					}
+# 				}
+# 				NOR = {
+# 					has_trait = compassionate
+# 					has_trait = chaste
+# 					has_trait = zealous
+# 				}
+# 			}
+# 		}
+# 		name = fascinare_outcome.4003.a.regular
+# 		if = {
+# 			limit = {
+# 				OR = {
+# 					scope:target = { is_landed = yes }
+# 					AND = {
+# 						exists = host
+# 						host = root
+# 					}
+# 				}
+# 			}
+# 			fascinare_outcome_publicised_attempted_crimes_or_nothing_effect = {
+# 				TARGET = scope:target
+# 				OWNER = scope:owner
+# 			}
+# 		}
+# 		else_if = {
+# 			limit = {
+# 				scope:target = {
+# 					exists = liege
+# 					NOT = { liege = scope:owner }
+# 				}
+# 			}
+# 			show_as_tooltip = {
+# 				fascinare_outcome_publicised_attempted_crimes_or_nothing_effect = {
+# 					TARGET = scope:target
+# 					OWNER = scope:owner
+# 				}
+# 			}
+# 			scope:target = { liege = { trigger_event = seduce_outcome.4900 } }
+# 		}
 
-		scope:target = { seduction_block_character_effect = { CHARACTER = scope:owner } }
+# 		scope:target = { seduction_block_character_effect = { CHARACTER = scope:owner } }
 
-		scope:scheme = {
-			end_scheme = yes
-		}
-	}
-}
+# 		scope:scheme = {
+# 			end_scheme = yes
+# 		}
+# 	}
+# }
 
 
 # Failure with reveal. Discovered.
@@ -858,7 +863,7 @@ fascinare_outcome.4005 = {
 	title = fascinare_outcome.4005.t
 	desc = fascinare_outcome.4005.desc
 	
-	theme = seduce_scheme
+	theme = faith
 
 	left_portrait = {
 		character = scope:target

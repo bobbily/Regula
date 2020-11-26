@@ -23,6 +23,26 @@ fascinare_block_character_effect = {
 	}
 }
 
+fascinare_cooldown_for_character_effect = {
+	if = {
+		limit = { root = scope:target }
+		custom_tooltip = seduce_outcome.cooldown
+
+		hidden_effect = {
+			add_opinion = {
+				target = $CHARACTER$
+				modifier = fascinare_regular_cooldown_opinion
+			}
+		}
+	}
+	else = {
+		add_opinion = {
+			target = $CHARACTER$
+			modifier = fascinare_regular_cooldown_opinion
+		}
+	}
+}
+
 fascinare_outcome_publicised_attempted_crimes_or_nothing_effect = {
 	$TARGET$ = {
 		#Grab everyone relevant who might be interested in the attempt.

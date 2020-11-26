@@ -1,5 +1,5 @@
 ﻿regula_initialize_decision = {
-	picture = "gfx/interface/illustrations/decisions/decision_major_religion.dds"
+	picture = "gfx/interface/illustrations/decisions/regula_initialize_decision.dds"
 	major = yes
 	title = regula_initialize_decision.t
 	desc = regula_initialize_decision_desc
@@ -41,7 +41,7 @@
 		}
 		trigger_event = { 
 			id = regula_initialize_event.0001 
-			days = 30
+			days = { 15 45 }
 		} 
 	}
 
@@ -52,3 +52,52 @@
 	}
 }
 
+regula_initialize_decision_minor = {
+	picture = "gfx/interface/illustrations/decisions/regula_initialize_decision.dds"
+	major = no
+	title = regula_initialize_decision_minor.t
+	desc = regula_initialize_decision_minor_desc
+	selection_tooltip = regula_initialize_decision_minor_tooltip
+
+	ai_check_interval = 0 #AI won't consider.
+
+	is_shown = {
+		is_ruler = yes
+		is_male = yes
+		is_ai = no
+		age >= 16
+		has_global_variable = regula_initialized
+		has_global_variable = regula_destroyed
+		NOT = { 
+			has_trait = magister_trait_group 
+			has_character_flag = regula_destroyed_character
+		}
+	
+	}
+
+#	cooldown = { years = 999 } #Not needed due to global variable. Failsafe.
+
+	is_valid = {
+		is_independent_ruler = yes
+	}
+
+	is_valid_showing_failures_only = {
+		is_available = yes
+	}
+
+	
+	effect = {
+		custom_tooltip = "regula_initialize_decision_minor_tooltip_effect"
+
+		trigger_event = { 
+			id = regula_initialize_event.0011 
+			days = { 1 7 }
+		} 
+	}
+
+	confirm_text = regula_initialize_decision_minor_confirm.a
+
+	ai_will_do = {
+		base = 0
+	}
+}

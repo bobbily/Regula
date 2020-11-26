@@ -1,7 +1,13 @@
 ﻿l_english:
   regula_initialize_decision.t:0 "Acquire the Regula Magistri" 
   regula_initialize_decision_desc.t:0 "Acquire the lost tome Regula Magistri, the Rules of the Master" 
-  regula_initialize_decision_desc:0 "I have heard rumours of an ancient tome that is said to corrupt the soul of those who read it and give them great power. It's whereabouts are currently unknown, but if I leverage all my resources I am certain that it will be mine."
+  regula_initialize_decision_desc:0 "I have heard rumours of an ancient tome that is said to corrupt the soul of those who read it, giving them great power. It's whereabouts are currently unknown, but if I leverage all my resources I am certain that it will be mine."
   regula_initialize_decision_tooltip_effect:0 "Begin the Regula Magistri event chain."
   regula_initialize_decision_tooltip:0 "What could be the harm?"
   regula_initialize_decision_confirm.a:0 "Spare no expense"
+
+  regula_initialize_decision_minor.t:0 "Find a book to read"
+  regula_initialize_decision_minor_desc:0 "The weather outside is dreadful, and you are tired of courtly intrigue. Deciding to spend the afternoon in your study, you find a not-unfamiliar volume nestled in your collection. Before you can properly identify where you've seen it before the book is in your hands."
+  regula_initialize_decision_minor_tooltip_effect:0 "Re-acquire the Regula Magistri."
+  regula_initialize_decision_minor_tooltip:0 "One of these tomes feels familiar..."
+  regula_initialize_decision_minor_confirm.a:0 "Inspect your choice"

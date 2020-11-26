@@ -10,8 +10,6 @@
 	resistance_per_skill_point = 0
 	minimum_progress_chance = 35
 	maximum_progress_chance = 95
-	minimum_success_chance = 25
-	maximum_success_chance = 95
 	# Does not use Spymaster
 	spymaster_power_per_skill_point = 0
 	spymaster_resistance_per_skill_point = 0
@@ -103,16 +101,12 @@
 	use_secrecy = {
 		use_fascinare_secrecy_trigger = yes
 	}
-##### UPDATE - This doesn't work.  Need scope:recipient?
-	# valid_agent = {
-	# 	scope:actor = {
-	# 		faith = regula_1
-	# 	}
-	# }
-	
+#### UPDATE - Verify.
 	valid_agent = {
+		is_regula_trigger = yes
+		age >= 14
 	}
-
+	
 	agent_join_chance = {
 		base = 0
 		
@@ -186,7 +180,7 @@
 	}
 
 	base_success_chance = {
-		base = 15
+		base = 25
 
 		#Magister
 		#Diplomacy based

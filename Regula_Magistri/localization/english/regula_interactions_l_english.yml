@@ -1,16 +1,41 @@
 ﻿l_english:
+  # Scheme interactions
   regula_fascinare:0 "Fascinare Scheme"
   regula_fascinare_action:0 "Charm"
   regula_fascinare_desc:0 "Use the powers of the Regula Magistri to bend her to your will."
-  regula_fascinare_desc_general:0 ""Use the powers of the Regula Magistri to bring someone under your sway.""
+  regula_fascinare_desc_general:0 ""Use the powers of the Regula Magistri to bring someone under your sway."
   regula_fascinare_interaction:0 "Fascinare"
+  regula_fascinare_interaction_action:0 "Charm"
   regula_fascinare_interaction_desc:0 "Use the powers of the Regula Magistri to bend this character to your will."
+  scheme_interaction_tt_regula_fascinare_approved:0 "Attempt to chain her will."
 
   scheme_interaction_tt_fascinare_approved:0 "Attempt to charm [recipient.GetShortUINameNoTooltip]."
   fascinare_invalid:0 "I stop trying to charm [target.GetShortUIName|U] as this is no longer feasible."
 
   I_HAVE_FASCINARE_COOLDOWN_ON_THIS_CHARACTER:1 "[TARGET_CHARACTER.GetShortUIName] is avoiding you. You can't get them alone."
   START_FASCINARE:0 "Bring her under your control"
-  FASCINARE_SUCCESS_DESC:1 "Bend [TARGET_CHARACTER.GetShortUIName|U] to your will"
+  FASCINARE_SUCCESS_DESC:1 "[TARGET_CHARACTER.GetShortUIName|U] is entranced"
   SCHEME_FASCINARE_THEIR_OPINION:0 "[target.GetTitledFirstNamePossessive] opinion of you: $VALUE|+0=-+$"
   regula_fascinare_interaction_toast:0 "Fascinare Scheme Begun"
+
+  # Concubinage interactions
+  regula_make_paelex_interaction:0 "Domitans tribunal"
+  regula_make_paelex_interaction_action:0 "Tame Her"
+  regula_make_paelex_interaction_desc:0 "This vassal has succumbed to the pleasure of obedience. Corrupt what is left of their free will and add them to your harem."
+  regula_make_paelex_interaction_action:0 "Begin the ritual"  #Not in use.
+
+  regula_promote_paelex_interaction:0 "Favens paelex"
+  regula_promote_paelex_interaction_action:0 "Promote paelex to domina"
+  regula_promote_paelex_interaction_desc:0 "This paelex is talented. Set them as first among your harem."
+
+  regula_demote_domina_interaction:0 "Demitte domina"
+  regula_demote_domina_interaction_action:0 "Demote domina to paelex"
+  regula_demote_domina_interaction_desc:0 "Your domina is not worthy of her role. Make this clear to all."
+
+  regula_take_orba_interaction:0 "Carpe orba"
+  regula_take_orba_interaction_action:0 "Claim her"
+  regula_take_orba_interaction_desc:0 "Servitude is all this lost paelex knows. Give her purpose once more."
+
+  # Ruler interactions
+  regula_councillor_county_convert_interaction:0 "Order to convert home county"
+  regula_councillor_county_convert_interaction_desc:0 "Your devotee will send their court chaplain to convert the masses."

@@ -18,10 +18,11 @@ regula_initialize_event.0001 = {
 
 	option = {
 		name = regula_initialize_event.0001.a
-		add_trait = magister_1 #Is a scope:root required?
-
+		add_piety_level = -5  # Because set_piety_level doesn't exist.
+		hidden_effect = { add_piety_level = 1 }
+		add_trait = magister_2 #Is a scope:root required?
 		root = {
-			set_character_faith = faith:regula_1 #perhaps set_character_faith_with_conversion?
+			set_character_faith = faith:regula_1 
 			}
 
 		trigger_event = {
@@ -84,20 +85,158 @@ regula_initialize_event.0002 = {
 	}
 }
 
-#Once more into the breach.
+# #Once more into the breach.
+# regula_initialize_event.0010 = {
+# 	hidden = yes
+# 	type = character_event
+
+# 	trigger = {
+# 		is_male = yes
+# 		age >= 16
+# 		has_realm_law = regula_magister_gender_law
+# 		NOT = { has_trait = magister_trait_group }
+# 		}
+# 	immediate = {
+# 		hidden_effect = { 
+# 			add_piety_level = -5
+# 			add_piety_level = 1
+# 		}
+# 		add_trait = magister_2 #Is a scope:root required?
+# 		root = {
+# 			set_character_faith = faith:regula_1 #perhaps set_character_faith_with_conversion?
+# 		}
+# 	}
+# }
+
+# Once more into the breach.
 regula_initialize_event.0010 = {
-	hidden = yes
 	type = character_event
+	title = regula_initialize_event.0010.t
+	desc = regula_initialize_event.0010.desc
+
+	theme = realm
+
+	right_portrait = {
+		character = root
+		animation = stress
+	}
 
 	trigger = {
 		is_male = yes
+		age >= 16
 		has_realm_law = regula_magister_gender_law
 		NOT = { has_trait = magister_trait_group }
+		NOT = { has_global_variable = regula_destroyed }
 		}
+
 	immediate = {
-		add_trait = magister_1 #Is a scope:root required?
-		root = {
-			set_character_faith = faith:regula_1 #perhaps set_character_faith_with_conversion?
+		play_music_cue = "mx_cue_sacredrite"
+	}
+
+	option = {
+		name = regula_initialize_event.0010.a
+		add_piety_level = -5  # Because set_piety_level doesn't exist.
+		hidden_effect = { add_piety_level = 1 }
+		add_trait = magister_2 #Is a scope:root required?
+		if = {
+			limit = {
+				NOT = { faith = { religion_tag = regula_religion } }
+			}
+			set_character_faith = faith:regula_1  # UPDATE - Is it possible to set them to the faith of their dead predecessor?
+		}
+		if = { 
+			limit = { NOT = { has_realm_law = regula_magister_gender_law } }
+			add_realm_law = regula_magister_gender_law
+		}
+		every_vassal = {
+			limit = {
+				highest_held_title_tier >= tier_county
+			}
+			if = {
+				limit = { NOT = { has_realm_law = regula_vassal_succession_law } }
+				add_realm_law = regula_vassal_succession_law
+			}
+		}
+		trigger_event = {
+			on_action = regula_initialize_complete_response
+		}
+	}
+
+	option = {
+		name = regula_initialize_event.0010.b	# Disable the Magister traits.
+		custom_tooltip = regula_initialize_event.0010.b.tt
+		hidden_effect = {
+			set_global_variable = {
+				name = regula_destroyed
+				value = yes
+			}
+			add_character_flag = {
+				flag = regula_destroyed_character
+			}
+		}
+	}
+}
+
+# Re-initializes the mod, for those that previously destroyed the book.
+regula_initialize_event.0011 = {
+	type = character_event
+	title = regula_initialize_event.0011.t
+	desc = regula_initialize_event.0011.desc
+
+	theme = realm
+
+	right_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	immediate = {
+		play_music_cue = "mx_cue_sacredrite"
+	}
+
+	option = { # Become a Magister.
+		name = regula_initialize_event.0011.a
+		add_piety_level = -5  # Because set_piety_level doesn't exist.
+		hidden_effect = { 
+			add_piety_level = 1 
+			set_global_variable = {
+				name = regula_destroyed
+				value = no
+			}
+		}
+		
+		add_trait = magister_2 
+		if = {
+			limit = {
+				NOT = { faith = { religion_tag = regula_religion } }
+			}
+			set_character_faith = faith:regula_1  # UPDATE - Is it possible to set them to the faith of their dead predecessor?
+		}
+		if = { 
+			limit = { NOT = { has_realm_law = regula_magister_gender_law } }
+			add_realm_law = regula_magister_gender_law
+		}
+		every_vassal = {
+			limit = {
+				highest_held_title_tier >= tier_county
+			}
+			if = {
+				limit = { NOT = { has_realm_law = regula_vassal_succession_law } }
+				add_realm_law = regula_vassal_succession_law
+			}
+		}
+		trigger_event = {
+			on_action = regula_initialize_complete_response
+		}
+	}
+
+	option = { # Back out.
+		name = regula_initialize_event.0011.b	
+		custom_tooltip = regula_initialize_event.0011.b.tt
+		hidden_effect = {
+			add_character_flag = {
+				flag = regula_destroyed_character
+			}
 		}
 	}
 }

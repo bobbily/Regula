@@ -1,4 +1,5 @@
-version="0.1"
+version="0.2"
+picture="thumbnail.png"
 tags={
 	"Gameplay"
 	"Character Interactions"
@@ -7,5 +8,5 @@ tags={
 	"Schemes"
 }
 name="Regula Magistri"
-supported_version="1.1.3"
-path="C:/Users/delta/Documents/Paradox Interactive/Crusader Kings III/mod/Regula_Magistri"
+supported_version="1.2.*"
+path="mod/Regula_Magistri"

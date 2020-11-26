@@ -1,10 +1,64 @@
-﻿#Pass to the next generation
+﻿### Deals with paelex.
 on_death = {
-	if = {
-		limit = {
-			is_ai = no
-			exists = player_heir
+	effect = {
+		if = {
+			limit = {
+				has_trait = magister_trait_group  # To limit the number of tasks to be done.
+			}
+			every_spouse = { # A wife with paelex shouldn't be possible.  Failsafe.
+				if = {
+					limit = {
+						has_trait = paelex
+					}
+					remove_trait = paelex
+					add_trait = orba
+				}
+			}
+			every_spouse = { 
+			if = {
+				limit = {
+					has_trait = domina
+				}
+				remove_trait = domina
+				add_trait = orba
+			}
+			every_concubine = {
+				if = {
+					limit = {
+						has_trait = paelex
+					}
+					remove_trait = paelex
+					add_trait = orba
+				}
+			}
+			every_concubine = { # A concubine with domina shouldn't be possible.  Failsafe.
+				if = {
+					limit = {
+						has_trait = domina
+					}
+					remove_trait = domina
+					add_trait = orba
+				}
+			}
 		}
-		events = {
-			regula_initialize_event.0010
-		}
+	}
+}
+
+# ##Pass to the next generation
+# on_death = {
+# 	effect = {
+# 		if = {
+# 			limit = {
+# 				is_ai = no
+# 				exists = player_heir
+# 				has_global_variable = regula_initialized
+# 			}
+# 			scope:player_heir = {
+# 					trigger_event = {
+# 					id = regula_initialize_event.0010 
+# 					days = 7
+# 				}
+# 			}
+# 		}
+# 	}
+# }

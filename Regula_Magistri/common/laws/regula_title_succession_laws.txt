@@ -206,34 +206,6 @@
 			prestige = change_succession_law_prestige_cost
 		}
 	}
-
-	succession_rel_head = {
-		same_faith_theocratic_succession_law = {
-			can_have = {
-				faith = {
-					religious_head = root
-					has_doctrine = doctrine_spiritual_head
-				}
-			}
-			succession = {
-				order_of_succession = theocratic
-				faith = same_faith
-				pool_character_config = pool_theocratic_succession
-			}
-		}
-		same_faith_succession_law = {
-			shown_in_encyclopedia = no
-			can_have = {
-				faith = {
-					religious_head = root
-					has_doctrine = doctrine_temporal_head
-				}
-			}
-			succession = {
-				faith = same_faith
-			}
-		}
-	}
 	#Regula gender succession law for the player. Male only inheritance, consorts allowed.
 	regula_magister_gender_law = {
 		can_title_have = {
@@ -302,6 +274,34 @@
 		}
 		revoke_cost = {
 			prestige = change_succession_law_prestige_cost
+		}
+	}
+}
+
+succession_rel_head = {
+	same_faith_theocratic_succession_law = {
+		can_have = {
+			faith = {
+				religious_head = root
+				has_doctrine = doctrine_spiritual_head
+			}
+		}
+		succession = {
+			order_of_succession = theocratic
+			faith = same_faith
+			pool_character_config = pool_theocratic_succession
+		}
+	}
+	same_faith_succession_law = {
+		shown_in_encyclopedia = no
+		can_have = {
+			faith = {
+				religious_head = root
+				has_doctrine = doctrine_temporal_head
+			}
+		}
+		succession = {
+			faith = same_faith
 		}
 	}
 }

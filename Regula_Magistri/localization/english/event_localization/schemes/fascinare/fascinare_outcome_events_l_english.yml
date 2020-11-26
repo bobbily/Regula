@@ -2,9 +2,10 @@
  fascinare_outcome.permanent_block:0 "[owner.GetTitledFirstName] has seen a glimpse of my power. I'll never be able to get close to them now."
  fascinare_outcome.cooldown:0 "[owner.GetTitledFirstName] is keeping their distance, for now."
 
- fascinare_permanent_blocker_opinion:0 "Repelled my initial assault"
+ fascinare_regular_cooldown_opinion:0 "Failed to charm them"
+ fascinare_permanent_blocker_opinion:0 "Repelled when attempting to charm them"
  fascinare_discovered_cooldown_opinion:0 "Discovered attempting to charm them"
- 
+  
  fascinare_outcome.0001.t:0 "Opportunity knocks"
  fascinare_outcome.0001.desc:0 "[target.GetTitledFirstNamePossessive] is alone, and likely to remain that way for some time. The perfect opportunity to bring them under my will.\n\n"
  fascinare_outcome.0001.positive.desc:0 "If I am to act I must move quickly. [discoverer.Custom2('NamePossessiveCharacterIntroduction', target)] may return at any moment."
@@ -29,7 +30,7 @@
  
 
  fascinare_outcome.2306.t:0 "The Perfect [ROOT.Char.Custom2('RelationToMe', SCOPE.sC('target'))|U]"
- fascinare_outcome.2306.desc:0 "While our marriage may have been a political affair, I was not without affection for [target.GetTitledFirstName]. Still, attempting to hide my actions from her has grown tiresome. It is time for a change in our relationship."
+ fascinare_outcome.2306.desc:0 "While our marriage may have been a political affair, I was not without affection for [target.GetTitledFirstName]. Still, attempting to hide my actions from her has grown tiresome. It is time for her to take a more active interest in my affairs."
  fascinare_outcome.2306.a:0 "Let me show you some things, dearest."
  
  fascinare_outcome.2307.t:0 "A bit of spice"
@@ -37,7 +38,7 @@
  fascinare_outcome.2307.a:0 "The reed that does not bend will surely be broken."
  
  fascinare_outcome.2308.t:0 "My Beloved [ROOT.Char.Custom2('RelationToMeShort', SCOPE.sC('target'))|U]"
- fascinare_outcome.2308_desc:0 "Our familial ties made it easy to get [target.GetTitledFirstName] alone. I felt a little guilt at abusing their trust so badly, but that was nothing compared to the rush of seeing her eyes fill with lust as she looked upon me. \n\nI snapped my fingers, and smiled approvingly as [target.GetTitledFirstName] sank to her knees. My only regret is that I can enslave her only the once."
+ fascinare_outcome.2308_desc:0 "Our familial ties made it easy to get [target.GetTitledFirstName] alone. I felt a little guilt at abusing their trust so badly, but that was nothing compared to the rush of seeing her eyes fill with lust as she looked upon me. \n\nI snapped my fingers, and smiled approvingly as [target.GetTitledFirstName] sinks to her knees. My only regret is that I can enslave her only the once."
  fascinare_outcome.2308.a:0 "Closer than ever."
 
 

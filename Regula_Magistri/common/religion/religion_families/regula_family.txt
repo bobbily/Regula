@@ -1,5 +1,5 @@
-﻿regula_group = { #UPDATE - Not currently in use.
-	graphical_faith = "norse_gfx"
-	hostility_doctrine = regula_hostility_doctrine
+﻿rf_regula = {
+	graphical_faith = "catholic_gfx"
+	hostility_doctrine = pagan_hostility_doctrine
 	doctrine_background_icon = core_tenet_banner_christian.dds #UPDATE
 }

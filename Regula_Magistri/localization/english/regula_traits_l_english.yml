@@ -1,16 +1,66 @@
 ﻿l_english:
-	magister_trait_group:0 "Keeper of Souls"
+# Magister traits
+	magister_trait_group:0 "Magister"
 	magister_trait_group_desc:0 "The Keeper of Souls acts through this one."
 	magister_trait_group_character_desc:0 "The Keeper of Souls acts through this one."
 
-	trait_magister_trait_group:0 "Keeper of Souls"
+	devoted_trait_group:0 "Devoted"
+	devoted_trait_group_desc:0 "This woman has been marked by your power."
+	devoted_trait_group_character_desc:0 "[ROOT.GetCharacter.GetFirstNameNoTooltip] has been marked by your power."
+
+	trait_devoted_trait_group:0 "Devoted"
+	trait_devoted_trait_group_desc:0 "This woman has been marked by your power."
+	trait_devoted_trait_group_character_desc:0 "[ROOT.GetCharacter.GetFirstNameNoTooltip] has been marked by your power."
+
+	trait_magister_trait_group:0 "Magister"
 	trait_magister_trait_group_desc:0 "The Keeper of Souls acts through this one."
 	trait_magister_trait_group_character_desc:0 "The Keeper of Souls acts through this one."
 
-	trait_magister_1:0 "Cenobite"
-	trait_magister_1_desc:0 "This character has read from the Rules of the Master. They are more than they once were."
-	trait_magister_1_character_desc:0 "[ROOT.GetCharacter.GetFirstNameNoTooltip] has read from the Rules of the Master. They are more than they once were."
+	trait_magister_1:0 "Poenitens"
+	trait_magister_1_desc:0 "This character has spurned the Keeper of Souls. To regain its grace they must make amends."
+	trait_magister_1_character_desc:0 "[ROOT.GetCharacter.GetFirstNameNoTooltip] has spurned the Keeper of Souls. To regain its grace they must make amends."
 
+	trait_magister_2:0 "Cenobite"
+	trait_magister_2_desc:0 "This character has read from the Rules of the Master. They are more than they once were."
+	trait_magister_2_character_desc:0 "[ROOT.GetCharacter.GetFirstNameNoTooltip] has read from the Rules of the Master. They are more than they once were."
+
+	trait_magister_3:0 "Zelator"
+	trait_magister_3_desc:0 "The Rules of the Master empower this character, shielding them from harm. Their voice echoes with sibilant whispers which pull and twist at the mind."
+	trait_magister_3_character_desc:0 "The Rules of the Master empower this [ROOT.GetCharacter.GetFirstNameNoTooltip], shielding them from harm. Their voice echoes with sibilant whispers which pull and twist at the mind."
+
+	trait_magister_4:0 "Skeuophylax"
+	trait_magister_4_desc:0 "Power swirls around this character and long-forgotten curses slip from their lips. The Keeper of Souls has granted them its favour."
+	trait_magister_4_character_desc:0 "Power swirls around [ROOT.GetCharacter.GetFirstNameNoTooltip] and long-forgotten curses slip from their lips. The Keeper of Souls has granted them its favour."
+
+	trait_magister_5:0 "Synkellos"
+	trait_magister_5_desc:0 "This character shines darkly with the power of the Keeper of Souls. One glance into their eyes is enough to ensnare the unwary."
+	trait_magister_5_character_desc:0 "[ROOT.GetCharacter.GetFirstNameNoTooltip] shines darkly with the power of the Keeper of Souls. One glance into their eyes is enough to ensnare the unwary."
+
+	trait_magister_6:0 "Exarch"
+	trait_magister_6_desc:0 "To look upon this character is to see the face of God. The weak-willed are struck senseless, and even non-believers find themselves filled with awe."
+	trait_magister_6_character_desc:0 "To look upon [ROOT.GetCharacter.GetFirstNameNoTooltip] is to see the face of God. The weak-willed are struck senseless, and even non-believers find themselves filled with awe."
+
+# Devoted traits
 	trait_mulsa:0 "Mulsa"
-	trait_mulsa_desc:0 "This woman has been touched by your power. Her words carry an echo of your will."
+	trait_mulsa_desc:0 "This woman has been touched by your power. Her eyes shine with purpose."
 	trait_mulsa_character_desc:0 "[ROOT.GetCharacter.GetFirstNameNoTooltip] has been touched by your power. Their eyes shine with purpose."
+
+	trait_paelex:0 "Paelex"
+	trait_paelex_desc:0 "This woman belongs to you, body and soul. Her words carry an echo of your will."
+	trait_paelex_character_desc:0 "[ROOT.GetCharacter.GetFirstNameNoTooltip] belongs to you, body and soul. Her words carry an echo of your will."
+
+	trait_domina:0 "Domina"
+	trait_domina_desc:0 "This woman serves at your side, lash in hand."
+	trait_domina_character_desc:0 "[ROOT.GetCharacter.GetFirstNameNoTooltip] serves at your side, lash in hand."
+
+	trait_orba:0 "Orba"
+	trait_orba_desc:0 "The link this woman had with the Keeper of Souls has been severed. Their mind is broken; their body crippled."
+	trait_orba_character_desc:0 "The link [ROOT.GetCharacter.GetFirstNameNoTooltip] had with the Keeper of Souls has been severed. Their mind is broken; their body crippled."
+
+	trait_contubernalis:0 "Contubernalis"
+	trait_contubernalis_desc:0 "For their sins this cunt's very soul has been butchered. There is no light in their eyes, and no purpose drives their actions save for an animalistic desire to fuck."
+	trait_contubernalis_character_desc:0 "For their sins this cunt's very soul has been butchered. There is no light in their eyes, and no purpose drives their actions save for an animalistic desire to fuck."
+
+	trait_regula_undying:0 "One with the Book"
+	trait_regula_undying_desc:0 "This character is irrevocably linked to the Regula Magistri. They will not age so long as it is whole."
+	trait_regula_undying_character_desc:0 "[ROOT.GetCharacter.GetFirstNameNoTooltip] is irrevocably linked to the Regula Magistri. They will not age so long as it is whole."

@@ -2,20 +2,24 @@
 # Indices notes for other modders
 # Reserved 6500 - 6599 for this mod
 # 6550-6559: Magister traits.
-# 6560-6580: Concubine traits. 
+# 6560-6570: Concubine traits. 
 ###
 
 magister_1 = {
-	index = 6550
+	index = 6551
 
     inherit_chance = 0
 	birth = 0
     random_creation = 0
 
-    intrigue = 3
-    diplomacy = 3
-    attraction_opinion = 15
-    fertility = 0.1
+    diplomacy = -3
+	learning = -3
+	stress_gain_mult = 0.25
+	health = -0.5
+	prowess = -2
+	same_faith_opinion = 15
+
+	shown_in_ruler_designer = no
 
 	desc = {
 		first_valid = {
@@ -47,13 +51,260 @@ magister_1 = {
 	}
 }
 
+magister_2 = {
+	index = 6552
 
+    inherit_chance = 0
+	birth = 0
+    random_creation = 0
 
+    intrigue = 1
+    diplomacy = 1
+	fertility = 0.1
+	attraction_opinion = 5
+	stress_gain_mult = -0.25
+	prowess = 4
+	same_faith_opinion = 25
+
+	shown_in_ruler_designer = no
+
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this } 
+				}
+				desc = trait_magister_2_desc
+			}
+			desc = trait_magister_2_character_desc
+		}
+	}
+
+	group = magister_trait_group
+    level = 2
+
+	#AI Values
+    ai_honor = -15
+	ai_zeal = -20
+
+	compatibility = {
+		seducer = @pos_compat_high
+		lustful = @pos_compat_medium
+		arrogant = @neg_compat_high
+		calm = @neg_compat_medium
+		ambitious = @neg_compat_medium
+		chaste = @neg_compat_low
+		greedy = @neg_compat_low
+	}
+}
+
+magister_3 = {
+	index = 6553
+
+    inherit_chance = 0
+	birth = 0
+    random_creation = 0
+
+    intrigue = 3
+    diplomacy = 3
+	attraction_opinion = 10
+	prowess = 6
+	fertility = 0.15
+	health = 0.25
+	stress_gain_mult = -0.50
+	same_faith_opinion = 25
+
+	shown_in_ruler_designer = no
+
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this } 
+				}
+				desc = trait_magister_3_desc
+			}
+			desc = trait_magister_3_character_desc
+		}
+	}
+
+	group = magister_trait_group
+    level = 3
+
+	#AI Values
+    ai_honor = -15
+	ai_zeal = -20
+
+	compatibility = {
+		seducer = @pos_compat_high
+		lustful = @pos_compat_medium
+		arrogant = @neg_compat_high
+		calm = @neg_compat_medium
+		ambitious = @neg_compat_medium
+		chaste = @neg_compat_low
+		greedy = @neg_compat_low
+	}
+}
+
+magister_4 = {
+	index = 6554
+
+    inherit_chance = 0
+	birth = 0
+    random_creation = 0
+
+    intrigue = 3
+	diplomacy = 3
+	martial = 3
+	prowess = 8
+	fertility = 0.2
+	health = 0.40
+	attraction_opinion = 20
+	stress_gain_mult = -0.60
+	dread_gain_mult = 0.25
+	different_faith_opinion = 5
+	same_faith_opinion = 25
+
+	shown_in_ruler_designer = no
+
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this } 
+				}
+				desc = trait_magister_4_desc
+			}
+			desc = trait_magister_4_character_desc
+		}
+	}
+
+	group = magister_trait_group
+    level = 4
+
+	#AI Values
+    ai_honor = -15
+	ai_zeal = -20
+
+	compatibility = {
+		seducer = @pos_compat_high
+		lustful = @pos_compat_medium
+		arrogant = @neg_compat_high
+		calm = @neg_compat_medium
+		ambitious = @neg_compat_medium
+		chaste = @neg_compat_low
+		greedy = @neg_compat_low
+	}
+}
+
+magister_5 = {
+	index = 6555
+
+    inherit_chance = 0
+	birth = 0
+    random_creation = 0
+
+    intrigue = 3
+	diplomacy = 3
+	martial = 3
+	attraction_opinion = 25
+	prowess = 10
+	fertility = 0.25
+	health = 0.50
+	stress_gain_mult = -0.75
+	dread_gain_mult = 0.50
+	dread_decay_mult = -0.25
+	same_faith_opinion = 25
+	different_faith_opinion = 15
+
+	shown_in_ruler_designer = no
+
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this } 
+				}
+				desc = trait_magister_5_desc
+			}
+			desc = trait_magister_5_character_desc
+		}
+	}
+
+	group = magister_trait_group
+    level = 5
+
+	#AI Values
+    ai_honor = -15
+	ai_zeal = -20
+
+	compatibility = {
+		seducer = @pos_compat_high
+		lustful = @pos_compat_medium
+		arrogant = @neg_compat_high
+		calm = @neg_compat_medium
+		ambitious = @neg_compat_medium
+		chaste = @neg_compat_low
+		greedy = @neg_compat_low
+	}
+}
+
+magister_6 = {
+	index = 6556
+
+    inherit_chance = 0
+	birth = 0
+    random_creation = 0
+
+    intrigue = 3
+	diplomacy = 3
+	martial = 3
+	prowess = 12
+	attraction_opinion = 25
+	fertility = 0.25
+	health = 0.50
+	stress_gain_mult = -0.90
+	dread_gain_mult = 0.50
+	dread_decay_mult = -0.50
+	same_faith_opinion = 25
+	different_faith_opinion = 25
+
+	shown_in_ruler_designer = no
+
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this } 
+				}
+				desc = trait_magister_6_desc
+			}
+			desc = trait_magister_6_character_desc
+		}
+	}
+
+	group = magister_trait_group
+    level = 6
+
+	#AI Values
+    ai_honor = -15
+	ai_zeal = -20
+
+	compatibility = {
+		seducer = @pos_compat_high
+		lustful = @pos_compat_medium
+		arrogant = @neg_compat_high
+		calm = @neg_compat_medium
+		ambitious = @neg_compat_medium
+		chaste = @neg_compat_low
+		greedy = @neg_compat_low
+	}
+}
 
 mulsa = {
-	index = 6560
+	index = 6561
 	opposites = {
-		magister_1
+		magister_trait_group
 	}
 
     inherit_chance = 0
@@ -68,9 +319,10 @@ mulsa = {
 	opposite_opinion = 25
     
 	stress_gain_mult = 0.2
+	group = devoted_trait_group
+	level = 1
 
-	##### This isn't recognized by the game.  Only hostile_scheme_resistance_add in main files.
-	#seduce_scheme_resistance_add = 50
+	shown_in_ruler_designer = no
 
 	desc = {
 		first_valid = {
@@ -83,20 +335,155 @@ mulsa = {
 			desc = trait_mulsa_character_desc
 		}
 	}
-
-
-
 }
 
 paelex = {
+	index = 6562
+	opposites = {
+		magister_trait_group
+	}
+
+	inherit_chance = 0
+	birth = 0
+	random_creation = 0
+
+	stewardship = 3
+	learning = 3
+	prowess = 2
+	fertility = 0.5
+	health = 0.50
+	attraction_opinion = 10
+	same_opinion = 25
+	opposite_opinion = 50
+	stress_gain_mult = 0.25
+	group = devoted_trait_group
+	level = 2
+
+	shown_in_ruler_designer = no
+
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this } 
+				}
+				desc = trait_paelex_desc
+			}
+			desc = trait_paelex_character_desc
+		}
+	}
+
+	ai_honor = dominant_positive_ai_value  # Should shut down seduce schemes.
+
+}
+
+domina = {
+	index = 6563
+	opposites = {
+		magister_trait_group
+	}
+
+	inherit_chance = 0
+	birth = 0
+	random_creation = 0
+
+	intrigue = 3
+	stewardship = 3
+	prowess = 4
+	fertility = 0.25
+	health = 1
+	attraction_opinion = 10
+	same_opinion = 50
+	opposite_opinion = 50
+	stress_gain_mult = -0.25
+	group = devoted_trait_group
+	level = 3
+
+	shown_in_ruler_designer = no
+
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this } 
+				}
+				desc = trait_domina_desc
+			}
+			desc = trait_domina_character_desc
+		}
+	}
+
+	ai_honor = dominant_positive_ai_value  # Should shut down seduce schemes.
 
 }
 
 orba = {
-	
+	index = 6564
+	opposites = {
+		magister_trait_group
+	}
+
+	inherit_chance = 0
+	birth = 0
+	random_creation = 0
+
+	diplomacy = -5
+	martial = -5
+	stewardship = -5
+	learning = -5
+	intrigue = -5
+	health = -4
+	opposite_opinion = 50
+	stress_gain_mult = 0.50
+	group = devoted_trait_group
+	level = 4
+
+	flag = can_not_marry
+	can_have_children = no
+	shown_in_ruler_designer = no
+
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this } 
+				}
+				desc = trait_orba_desc
+			}
+			desc = trait_orba_character_desc
+		}
+	}
 }
 
 contubernalis = {
-# blocks_from_claim_inheritance = yes #for later.
+	index = 6565
+	# blocks_from_claim_inheritance = yes #for later.
+	# flag = can_not_be_granted_titles ## Will require carnalitas
+	# flag = carn_cannot_be_enslaved
+	# ai_honor = dominant_positive_ai_value
+	shown_in_ruler_designer = no
+	}
+
+regula_undying = {
+	index = 6566
+
+    inherit_chance = 0
+	birth = 0
+    random_creation = 0
+
+	immortal = yes
+	shown_in_ruler_designer = no
+
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					NOT = { exists = this } 
+				}
+				desc = trait_regula_undying_desc
+			}
+			desc = trait_regula_undying_character_desc
+		}
+	}
 }
 

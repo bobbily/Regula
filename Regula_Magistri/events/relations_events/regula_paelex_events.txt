@@ -1,0 +1,1288 @@
+﻿namespace = regula_paelex_event
+
+# 0001 - 0999: Maintenance events. 
+# 1000 - 1999: Paelex initiation events.
+# 2000 - 2999: Domina initiation events.
+
+
+# Adds landed concubine bonuses.
+regula_paelex_event.0998 = {
+	hidden = yes
+	type = character_event
+
+	trigger = {
+	has_realm_law = regula_magister_gender_law
+	}
+
+	immediate = {
+		add_piety = { ### 0.75 piety per concubine per quarter.
+			value = regula_num_landed_concubines
+			multiply = 3
+			divide = 4
+		}
+		if = {
+			limit = {
+				has_character_modifier = paelex_realm_benefits1
+			}
+			remove_character_modifier = paelex_realm_benefits1
+		}
+		if = {
+			limit = {
+				has_character_modifier = paelex_realm_benefits2
+			}
+			remove_character_modifier = paelex_realm_benefits2
+		}
+		if = {
+			limit = {
+				has_character_modifier = paelex_realm_benefits3
+			}
+			remove_character_modifier = paelex_realm_benefits3
+		}
+		if = {
+			limit = {
+				has_character_modifier = paelex_realm_benefits4
+			}
+			remove_character_modifier = paelex_realm_benefits4
+		}
+		if = {
+			limit = {
+				has_character_modifier = paelex_realm_benefits5
+			}
+			remove_character_modifier = paelex_realm_benefits5
+		}
+		if = {
+			limit = {
+				has_character_modifier = paelex_realm_benefits6
+			}
+			remove_character_modifier = paelex_realm_benefits6
+		}
+		if = {
+			limit = {
+				has_character_modifier = paelex_realm_benefits7
+			}
+			remove_character_modifier = paelex_realm_benefits7
+				}
+		if = {
+			limit = {
+				has_character_modifier = paelex_realm_benefits8
+			}
+			remove_character_modifier = paelex_realm_benefits8
+		}
+		if = {
+			limit = {
+				has_character_modifier = paelex_realm_benefits9
+			}
+			remove_character_modifier = paelex_realm_benefits9
+		}
+		if = {
+			limit = {
+				has_character_modifier = paelex_realm_benefits10
+			}
+			remove_character_modifier = paelex_realm_benefits10
+		}
+		if = { # Variables don't work in modifiers.
+			limit = {
+				regula_num_landed_concubines = 1
+			}
+			add_character_modifier = paelex_realm_benefits1
+		}
+		if = {
+			limit = {
+				regula_num_landed_concubines = 2
+			}
+			add_character_modifier = paelex_realm_benefits2
+		}
+		if = {
+			limit = {
+				regula_num_landed_concubines = 3
+			}
+			add_character_modifier = paelex_realm_benefits3
+		}
+		if = {
+			limit = {
+				regula_num_landed_concubines = 4
+			}
+			add_character_modifier = paelex_realm_benefits4
+		}
+		if = {
+			limit = {
+				regula_num_landed_concubines = 5
+			}
+			add_character_modifier = paelex_realm_benefits5
+		}
+		if = {
+			limit = {
+				regula_num_landed_concubines = 6
+			}
+			add_character_modifier = paelex_realm_benefits6
+		}
+		if = {
+			limit = {
+				regula_num_landed_concubines = 7
+			}
+			add_character_modifier = paelex_realm_benefits7
+		}
+		if = {
+			limit = {
+				regula_num_landed_concubines = 8
+			}
+			add_character_modifier = paelex_realm_benefits8
+		}
+		if = {
+			limit = {
+				regula_num_landed_concubines = 9
+			}
+			add_character_modifier = paelex_realm_benefits9
+		}
+		if = {
+			limit = {
+				regula_num_landed_concubines >= 10
+			}
+			add_character_modifier = paelex_realm_benefits10
+		}
+
+	}
+}
+
+# 0999. Vassal succession law maintenance.
+regula_paelex_event.0999 = {
+	hidden = yes
+	type = character_event
+
+	trigger = {
+	has_realm_law = regula_magister_gender_law
+	}
+
+	immediate = {
+		every_vassal = {
+			limit = {
+				highest_held_title_tier >= tier_county
+			}
+			if = {
+				limit = { NOT = { has_realm_law = regula_vassal_succession_law } }
+				add_realm_law = regula_vassal_succession_law
+			}
+		}
+	}
+}
+
+######################################################
+# MAINTENANCE EVENTS
+# 1000-1010: - Initiation events
+# 1010-1019: - Mind boosts
+# 1020-1029: - Body boosts
+# 1030-1039: - Sex boosts
+######################################################
+
+
+### Make a landed vassal a paelex. Smooth with bliss.
+regula_paelex_event.1000 = {
+	type = character_event
+	title = regula_paelex_event.1000.t
+	desc = regula_paelex_event.1000.desc
+	theme = faith
+	override_background = {
+		event_background = godless_shrine  # Background: https://www.artstation.com/julesmartinvos
+	}
+
+	right_portrait = {
+		character = scope:recipient
+    	animation = personality_zealous
+	}
+
+	immediate = {
+		scope:recipient = {
+			add_character_flag = {
+				flag = is_naked
+				days = 180
+			}
+		}
+		# hidden_effect = { # UPDATE - Not quite right.
+		# 	scope:recipient = {
+		# 		add_trait = blind
+		# 	}
+		# }
+	}
+
+	option = {
+		name = regula_paelex_event.1000.b # Push power into her body. Increased beauty, reduction in apparent age.
+		trigger_event = {
+			on_action = regula_vassal_paelex_initiation_2
+		}
+	}
+	option = {
+		name = regula_paelex_event.1000.a # Drive the power into her mind. Increased traits, may bump up lifestyle trait.
+		trigger_event = {
+			on_action = regula_vassal_paelex_initiation_1
+		}
+	}
+	option = {
+		name = regula_paelex_event.1000.c # Mix power with your seed. Inheritable traits and pregnancy.
+		trigger_event = {
+			on_action = regula_vassal_paelex_initiation_3
+		}
+	}
+	option = {
+		name = regula_paelex_event.1000.d # Take power for yourself.
+		add_piety = 250
+	}
+	after = {
+		scope:recipient = {
+			remove_character_flag = is_naked
+		}
+		# hidden_effect = {
+		# 	scope:recipient = {
+		# 		remove_trait = blind
+		# 	}
+		# }
+	}
+}
+
+### Make a landed vassal a paelex. Shatter.
+regula_paelex_event.1001 = {
+	type = character_event
+	title = regula_paelex_event.1001.t
+	desc = regula_paelex_event.1001.desc
+	theme = faith
+	override_background = {
+		event_background = godless_shrine  # Background: https://www.artstation.com/julesmartinvos
+	}
+
+	right_portrait = {
+		character = scope:recipient
+    	animation = personality_zealous
+	}
+
+	immediate = {
+		scope:recipient = {
+			add_character_flag = {
+				flag = is_naked
+				days = 180
+			}
+		}
+		# hidden_effect = { # UPDATE - Not quite right.
+		# 	scope:recipient = {
+		# 		add_trait = blind
+		# 	}
+		# }
+	}
+
+	option = {
+		name = regula_paelex_event.1000.b # Push power into her body. Increased beauty, reduction in apparent age.
+		trigger_event = {
+			on_action = regula_vassal_paelex_initiation_2
+		}
+	}
+	option = {
+		name = regula_paelex_event.1000.a # Drive the power into her mind. Increased traits, may bump up lifestyle trait.
+		trigger_event = {
+			on_action = regula_vassal_paelex_initiation_1
+		}
+	}
+	option = {
+		name = regula_paelex_event.1000.c # Mix power with your seed. Inheritable traits and pregnancy.
+		trigger_event = {
+			on_action = regula_vassal_paelex_initiation_3
+		}
+	}
+	option = {
+		name = regula_paelex_event.1000.d # Take power for yourself.
+		add_piety = 250
+	}
+	after = {
+		scope:recipient = {
+			remove_character_flag = is_naked
+		}
+		# hidden_effect = {
+		# 	scope:recipient = {
+		# 		remove_trait = blind
+		# 	}
+		# }
+	}
+}
+
+
+
+# Adds a small boost to mental traits.
+regula_paelex_event.1011 = {
+	hidden = yes
+	type = character_event
+
+	trigger = {
+		NOR = {
+			has_trait = education_stewardship_4
+			has_trait = education_martial_4
+			has_trait = education_intrigue_4
+			has_trait = education_diplomacy_4
+			has_trait = education_learning_4
+		}
+	}
+
+	immediate = {
+		scope:recipient = {
+			if = {
+				limit = { has_trait = education_stewardship_3 }
+				remove_trait = education_stewardship_3
+				add_trait = education_stewardship_4
+			}
+			if = {
+				limit = { has_trait = education_stewardship_2 }
+				remove_trait = education_stewardship_2
+				add_trait = education_stewardship_3
+			}
+			if = {
+				limit = { has_trait = education_stewardship_1 }
+				remove_trait = education_stewardship_1
+				add_trait = education_stewardship_2
+			}
+			if = {
+				limit = { has_trait = education_martial_3 }
+				remove_trait = education_martial_3
+				add_trait = education_martial_4
+			}
+			if = {
+				limit = { has_trait = education_martial_2 }
+				remove_trait = education_martial_2
+				add_trait = education_martial_3
+			}
+			if = {
+				limit = { has_trait = education_martial_1 }
+				remove_trait = education_martial_1
+				add_trait = education_martial_2
+			}
+			if = {
+				limit = { has_trait = education_learning_3 }
+				remove_trait = education_learning_3
+				add_trait = education_learning_4
+			}
+			if = {
+				limit = { has_trait = education_learning_2 }
+				remove_trait = education_learning_2
+				add_trait = education_learning_3
+			}
+			if = {
+				limit = { has_trait = education_learning_1 }
+				remove_trait = education_learning_1
+				add_trait = education_learning_2
+			}
+			if = {
+				limit = { has_trait = education_intrigue_3 }
+				remove_trait = education_intrigue_3
+				add_trait = education_intrigue_4
+			}
+			if = {
+				limit = { has_trait = education_intrigue_2 }
+				remove_trait = education_intrigue_2
+				add_trait = education_intrigue_3
+			}
+			if = {
+				limit = { has_trait = education_intrigue_1 }
+				remove_trait = education_intrigue_1
+				add_trait = education_intrigue_2
+			}
+			if = {
+				limit = { has_trait = education_diplomacy_3 }
+				remove_trait = education_diplomacy_3
+				add_trait = education_diplomacy_4
+			}
+			if = {
+				limit = { has_trait = education_diplomacy_2 }
+				remove_trait = education_diplomacy_2
+				add_trait = education_diplomacy_3
+			}
+			if = {
+				limit = { has_trait = education_diplomacy_1 }
+				remove_trait = education_diplomacy_1
+				add_trait = education_diplomacy_2
+			}
+		}
+		trigger_event = {
+			on_action = regula_vassal_paelex_mind_repair
+			}
+			
+		scope:actor = {
+			send_interface_message = {  # Tells the player the outcome.
+				type = event_spouse_task_good
+				title = regula_make_paelex_outcome_small_boost.t
+				desc = {
+					triggered_desc = {
+						trigger = {
+							scope:recipient = {
+								is_spouse_of = scope:actor
+							}
+						}
+						desc = regula_make_paelex_outcome_domina_small_boost.desc
+					}
+					triggered_desc = {
+						trigger = {
+							scope:recipient = {
+								is_concubine_of = scope:actor
+							}
+						}
+						desc = regula_make_paelex_outcome_small_boost.desc
+					}
+				}
+				right_icon = scope:recipient
+			}
+		}
+	}
+}
+
+
+# Adds a medium boost to mental traits.
+regula_paelex_event.1012 = {
+	hidden = yes
+	type = character_event
+
+	immediate = {
+		scope:recipient = {
+			if = {
+				limit = { has_trait = dull }
+				remove_trait = dull
+			}
+			if = {
+				limit = { has_trait = intellect_bad_1 }
+				remove_trait = intellect_bad_1
+			}
+			if = {
+				limit = { has_trait = intellect_bad_2 }
+				remove_trait = intellect_bad_2
+				add_trait = intellect_bad_1
+			}
+			if = {
+				limit = { has_trait = intellect_bad_3 }
+				remove_trait = intellect_bad_3
+				add_trait = intellect_bad_2
+			}
+			if = {
+				limit = { has_trait = intellect_good_2 }
+				remove_trait = intellect_good_2
+				add_trait = intellect_good_3
+			}
+			if = {
+				limit = { has_trait = intellect_good_1 }
+				remove_trait = intellect_good_1
+				add_trait = intellect_good_2
+			}
+			if = {
+				limit = {
+					NOR = {
+						has_trait = intellect_bad_1
+						has_trait = intellect_bad_2
+						has_trait = intellect_bad_3
+						has_trait = intellect_good_1
+						has_trait = intellect_good_2
+						has_trait = intellect_good_3
+					}
+				}
+				scope:recipient = {
+					add_trait = intellect_good_1
+				}
+			}
+		}
+		trigger_event = {
+			on_action = regula_vassal_paelex_mind_repair
+			}
+		scope:actor = {
+			send_interface_message = {  # Tell the player the outcome.
+				type = event_spouse_task_good
+				title = regula_make_paelex_outcome_medium_boost.t
+				desc = {
+					triggered_desc = {
+						trigger = {
+							scope:recipient = {
+								is_spouse_of = scope:actor
+							}
+						}
+						desc = regula_make_paelex_outcome_domina_medium_boost.desc
+					}
+					triggered_desc = {
+						trigger = {
+							scope:recipient = {
+								is_concubine_of = scope:actor
+							}
+						}
+						desc = regula_make_paelex_outcome_medium_boost.desc
+					}
+				}
+				right_icon = scope:recipient
+			}
+		}
+	}
+}
+
+
+# Adds a large boost to mental traits.
+regula_paelex_event.1013 = {
+	hidden = yes
+	type = character_event
+
+	immediate = {
+		scope:recipient = {
+			if = {
+				limit = { has_trait = dull }
+				remove_trait = dull
+			}
+			if = {
+				limit = { has_trait = education_stewardship_3 }
+				remove_trait = education_stewardship_3
+				add_trait = education_stewardship_4
+			}
+			if = {
+				limit = { has_trait = education_stewardship_2 }
+				remove_trait = education_stewardship_2
+				add_trait = education_stewardship_3
+			}
+			if = {
+				limit = { has_trait = education_stewardship_1 }
+				remove_trait = education_stewardship_1
+				add_trait = education_stewardship_2
+			}
+			if = {
+				limit = { has_trait = education_martial_3 }
+				remove_trait = education_martial_3
+				add_trait = education_martial_4
+			}
+			if = {
+				limit = { has_trait = education_martial_2 }
+				remove_trait = education_martial_2
+				add_trait = education_martial_3
+			}
+			if = {
+				limit = { has_trait = education_martial_1 }
+				remove_trait = education_martial_1
+				add_trait = education_martial_2
+			}
+			if = {
+				limit = { has_trait = education_learning_3 }
+				remove_trait = education_learning_3
+				add_trait = education_learning_4
+			}
+			if = {
+				limit = { has_trait = education_learning_2 }
+				remove_trait = education_learning_2
+				add_trait = education_learning_3
+			}
+			if = {
+				limit = { has_trait = education_learning_1 }
+				remove_trait = education_learning_1
+				add_trait = education_learning_2
+			}
+			if = {
+				limit = { has_trait = education_intrigue_3 }
+				remove_trait = education_intrigue_3
+				add_trait = education_intrigue_4
+			}
+			if = {
+				limit = { has_trait = education_intrigue_2 }
+				remove_trait = education_intrigue_2
+				add_trait = education_intrigue_3
+			}
+			if = {
+				limit = { has_trait = education_intrigue_1 }
+				remove_trait = education_intrigue_1
+				add_trait = education_intrigue_2
+			}
+			if = {
+				limit = { has_trait = education_diplomacy_3 }
+				remove_trait = education_diplomacy_3
+				add_trait = education_diplomacy_4
+			}
+			if = {
+				limit = { has_trait = education_diplomacy_2 }
+				remove_trait = education_diplomacy_2
+				add_trait = education_diplomacy_3
+			}
+			if = {
+				limit = { has_trait = education_diplomacy_1 }
+				remove_trait = education_diplomacy_1
+				add_trait = education_diplomacy_2
+			}
+			if = {
+				limit = { has_trait = intellect_bad_1 }
+				remove_trait = intellect_bad_1
+			}
+			if = {
+				limit = { has_trait = intellect_bad_2 }
+				remove_trait = intellect_bad_2
+				add_trait = intellect_bad_1
+			}
+			if = {
+				limit = { has_trait = intellect_bad_3 }
+				remove_trait = intellect_bad_3
+				add_trait = intellect_bad_2
+			}
+			if = {
+				limit = { has_trait = intellect_good_2 }
+				remove_trait = intellect_good_2
+				add_trait = intellect_good_3
+			}
+			if = {
+				limit = { has_trait = intellect_good_1 }
+				remove_trait = intellect_good_1
+				add_trait = intellect_good_2
+			}
+			if = {
+				limit = {
+					NOR = {
+						has_trait = intellect_bad_1
+						has_trait = intellect_bad_2
+						has_trait = intellect_bad_3
+						has_trait = intellect_good_1
+						has_trait = intellect_good_2
+						has_trait = intellect_good_3
+					}
+				}
+				scope:recipient = {
+					add_trait = intellect_good_1
+				}
+			}
+		}
+		trigger_event = {
+			on_action = regula_vassal_paelex_mind_repair
+			}
+		scope:actor = {
+			send_interface_message = {  # Tells the player the outcome.
+				type = event_spouse_task_good
+				title = regula_make_paelex_outcome_large_boost.t
+				desc = {
+					triggered_desc = {
+						trigger = {
+							scope:recipient = {
+								is_spouse_of = scope:actor
+							}
+						}
+						desc = regula_make_paelex_outcome_domina_large_boost.desc
+					}
+					triggered_desc = {
+						trigger = {
+							scope:recipient = {
+								is_concubine_of = scope:actor
+							}
+						}
+						desc = regula_make_paelex_outcome_large_boost.desc
+					}
+				}
+				right_icon = scope:recipient
+			}
+		}
+	}
+}
+
+regula_paelex_event.1021 = {
+	hidden = yes
+	type = character_event
+
+	immediate = {
+		scope:recipient = {
+			if = {
+				limit = { has_trait = early_great_pox }
+				remove_trait = early_great_pox
+			}
+			if = {
+				limit = { has_trait = lovers_pox }
+				remove_trait = lovers_pox
+			}
+			if = {
+				limit = { has_trait = ill }
+				remove_trait = ill
+			}
+			if = {
+				limit = { has_trait = pneumonic }
+				remove_trait = pneumonic
+			}		
+			if = {
+				limit = { has_trait = wounded_1 }
+				remove_trait = wounded_1
+			}
+			if = {
+				limit = { has_trait = wounded_2 }
+				remove_trait = wounded_2
+			}
+			if = {
+				limit = { has_trait = wounded_3 }
+				remove_trait = wounded_3
+				add_trait = wounded_1
+			}
+			if = {
+				limit = { has_trait = maimed }
+				remove_trait = maimed
+			}
+			if = {
+				limit = { has_trait = disfigured }
+				remove_trait = disfigured
+			}
+			if = {
+				limit = { has_trait = gout_ridden }
+				remove_trait = gout_ridden
+			}
+			if = {
+				limit = { has_trait = consumption }
+				remove_trait = consumption
+			}
+			if = {
+				limit = { has_trait = cancer }
+				remove_trait = cancer
+			}
+			if = {
+				limit = { has_trait = blind }
+				remove_trait = blind
+			}
+			if = {
+				limit = { has_trait = weak }
+				remove_trait = weak
+			}
+			add_trait = athletic
+			add_trait = lifestyle_herbalist
+		}
+		scope:actor = {
+			send_interface_message = {  # Tells the player the outcome.
+				type = event_spouse_task_good
+				title = regula_make_paelex_outcome_medium_boost.t
+				desc = {
+					triggered_desc = {
+						trigger = {
+							scope:recipient = {
+								is_spouse_of = scope:actor
+							}
+						}
+						desc = regula_make_paelex_outcome_domina_medium_boost.desc
+					}
+					triggered_desc = {
+						trigger = {
+							scope:recipient = {
+								is_concubine_of = scope:actor
+							}
+						}
+						desc = regula_make_paelex_outcome_medium_boost.desc
+					}
+				}
+				right_icon = scope:recipient
+			}
+		}
+	}
+}
+
+regula_paelex_event.1022 = {
+	hidden = yes
+	type = character_event
+
+	immediate = {
+		scope:recipient = {
+			if = {
+				limit = { has_trait = infertile }
+				remove_trait = infertile
+			}
+			if = {
+				limit = { has_trait = early_great_pox }
+				remove_trait = early_great_pox
+			}
+			if = {
+				limit = { has_trait = lovers_pox }
+				remove_trait = lovers_pox
+			}
+			if = {
+				limit = { has_trait = ill }
+				remove_trait = ill
+			}
+			if = {
+				limit = { has_trait = pneumonic }
+				remove_trait = pneumonic
+			}
+			if = {
+				limit = { has_trait = leper }
+				remove_trait = leper
+			}		
+			if = {
+				limit = { has_trait = wounded_1 }
+				remove_trait = wounded_1
+			}
+			if = {
+				limit = { has_trait = wounded_2 }
+				remove_trait = wounded_2
+			}
+			if = {
+				limit = { has_trait = wounded_3 }
+				remove_trait = wounded_3
+			}
+			if = {
+				limit = { has_trait = maimed }
+				remove_trait = maimed
+			}
+			if = {
+				limit = { has_trait = disfigured }
+				remove_trait = disfigured
+			}
+			if = {
+				limit = { has_trait = one_legged }
+				remove_trait = one_legged
+			}
+			if = {
+				limit = { has_trait = disfigured }
+				remove_trait = disfigured
+			}
+			if = {
+				limit = { has_trait = infirm }
+				remove_trait = infirm
+			}
+			if = {
+				limit = { has_trait = incapable }
+				remove_trait = incapable
+			}
+			if = {
+				limit = { has_trait = gout_ridden }
+				remove_trait = gout_ridden
+			}
+			if = {
+				limit = { has_trait = consumption }
+				remove_trait = consumption
+			}
+			if = {
+				limit = { has_trait = cancer }
+				remove_trait = cancer
+			}
+			if = {
+				limit = { has_trait = typhus }
+				remove_trait = typhus
+			}
+			if = {
+				limit = { has_trait = bubonic_plague }
+				remove_trait = bubonic_plague
+			}
+			if = {
+				limit = { has_trait = smallpox }
+				remove_trait = smallpox
+			}
+			if = {
+				limit = { has_trait = blind }
+				remove_trait = blind
+			}
+			if = {
+				limit = { has_trait = weak }
+				remove_trait = weak
+			}
+			if = {
+				limit = { has_trait = spindly }
+				remove_trait = spindly
+			}
+			if = {
+				limit = { has_trait = physique_bad_1 }
+				remove_trait = physique_bad_1
+			}
+			if = {
+				limit = { has_trait = physique_bad_2 }
+				remove_trait = physique_bad_2
+				add_trait = physique_bad_1
+			}
+			if = {
+				limit = { has_trait = physique_bad_3 }
+				remove_trait = physique_bad_3
+				add_trait = physique_bad_2
+			}
+			if = {
+				limit = { has_trait = physique_good_2 }
+				remove_trait = physique_good_2
+				add_trait = physique_good_3
+			}
+			if = {
+				limit = { has_trait = physique_good_1 }
+				remove_trait = physique_good_1
+				add_trait = physique_good_2
+			}
+			if = {
+				limit = {
+					NOR = {
+						has_trait = physique_bad_1
+						has_trait = physique_bad_2
+						has_trait = physique_bad_3
+						has_trait = physique_good_1
+						has_trait = physique_good_2
+						has_trait = physique_good_3
+					}
+				}
+				scope:recipient = {
+					add_trait = physique_good_1
+				}
+			}
+			if = {
+				limit = { has_trait = lisping }
+				remove_trait = lisping
+			}
+			if = {
+				limit = { has_trait = stuttering }
+				remove_trait = stuttering
+			}
+			if = {
+				limit = { has_trait = scaly }
+				remove_trait = scaly
+			}
+		}
+		scope:actor = {
+			send_interface_message = {  # Tells the player the outcome.
+				type = event_spouse_task_good
+				title = regula_make_paelex_outcome_large_boost.t
+				desc = {
+					triggered_desc = {
+						trigger = {
+							scope:recipient = {
+								is_spouse_of = scope:actor
+							}
+						}
+						desc = regula_make_paelex_outcome_domina_large_boost.desc
+					}
+					triggered_desc = {
+						trigger = {
+							scope:recipient = {
+								is_concubine_of = scope:actor
+							}
+						}
+						desc = regula_make_paelex_outcome_large_boost.desc
+					}
+				}
+				right_icon = scope:recipient
+			}
+		}
+	}
+}
+
+regula_paelex_event.1031 = {
+	hidden = yes
+	type = character_event
+
+	immediate = {
+		scope:recipient = {
+			if = {
+				limit = { has_trait = infertile }
+				remove_trait = infertile
+			}
+			if = {
+				limit = { has_trait = early_great_pox }
+				remove_trait = early_great_pox
+			}
+			if = {
+				limit = { has_trait = lovers_pox }
+				remove_trait = lovers_pox
+			}
+			if = {
+				limit = { has_trait = chaste }
+				remove_trait = chaste
+				add_trait = lustful
+			}
+			if = {
+				limit = { has_trait = infertile }
+				remove_trait = infertile
+				add_trait = fecund
+			}
+			if = {
+				limit = { NOT = { has_trait = fecund } }
+				add_trait = fecund
+			}
+			if = {
+				limit = { NOT = { has_trait = lustful } }
+				add_trait = lustful
+			}
+			make_pregnant = {
+				father = scope:actor
+			}
+		}
+		scope:actor = {
+			send_interface_message = {  # Tells the player the outcome.
+				type = event_spouse_task_good
+				title = regula_make_paelex_outcome_small_boost.t
+				desc = {
+					triggered_desc = {
+						trigger = {
+							scope:recipient = {
+								is_spouse_of = scope:actor
+							}
+						}
+						desc = regula_make_paelex_outcome_domina_small_boost.desc
+					}
+					triggered_desc = {
+						trigger = {
+							scope:recipient = {
+								is_concubine_of = scope:actor
+							}
+						}
+						desc = regula_make_paelex_outcome_small_boost.desc
+					}
+				}
+				right_icon = scope:recipient
+			}
+		}
+	}
+}
+
+regula_paelex_event.1032 = {
+	hidden = yes
+	type = character_event
+
+	immediate = {
+		scope:recipient = {
+			if = {
+				limit = { has_trait = infertile }
+				remove_trait = infertile
+			}
+			if = {
+				limit = { has_trait = early_great_pox }
+				remove_trait = early_great_pox
+			}
+			if = {
+				limit = { has_trait = lovers_pox }
+				remove_trait = lovers_pox
+			}
+			if = {
+				limit = { has_trait = chaste }
+				remove_trait = chaste
+				add_trait = lustful
+			}
+			if = {
+				limit = { has_trait = infertile }
+				remove_trait = infertile
+				add_trait = fecund
+			}
+			if = {
+				limit = { NOT = { has_trait = fecund } }
+				add_trait = fecund
+			}
+			if = {
+				limit = { NOT = { has_trait = lustful } }
+				add_trait = lustful
+			}
+			if = {
+				limit = { has_trait = beauty_good_1 }
+				remove_trait = beauty_good_1
+				add_trait = beauty_good_3
+			}
+			if = {
+				limit = { has_trait = beauty_good_2 }
+				remove_trait = beauty_good_2
+				add_trait = beauty_good_3
+			}
+			if = {
+				limit = { has_trait = beauty_bad_1 }
+				remove_trait = beauty_bad_1
+				add_trait = beauty_good_1
+			}
+			if = {
+				limit = { has_trait = beauty_bad_3 }
+				remove_trait = beauty_bad_3
+				add_trait = beauty_bad_1
+			}
+			if = {
+				limit = { has_trait = beauty_bad_2 }
+				remove_trait = beauty_bad_2
+			}
+			if = {
+				limit = {
+					NOR = {
+						has_trait = beauty_bad_1
+						has_trait = beauty_bad_2
+						has_trait = beauty_bad_3
+						has_trait = beauty_good_1
+						has_trait = beauty_good_2
+						has_trait = beauty_good_3
+					}
+				}
+				scope:recipient = {
+					add_trait = beauty_good_1
+				}
+			}
+			make_pregnant = {
+				father = scope:magister
+				number_of_children = 2
+			}
+			set_sexuality = bisexual
+		}
+		scope:actor = {
+			send_interface_message = {  # Tells the player the outcome.
+				type = event_spouse_task_good
+				title = regula_make_paelex_outcome_medium_boost.t
+				desc = {
+					triggered_desc = {
+						trigger = {
+							scope:recipient = {
+								is_spouse_of = scope:actor
+							}
+						}
+						desc = regula_make_paelex_outcome_domina_medium_boost.desc
+					}
+					triggered_desc = {
+						trigger = {
+							scope:recipient = {
+								is_concubine_of = scope:actor
+							}
+						}
+						desc = regula_make_paelex_outcome_medium_boost.desc
+					}
+				}
+				right_icon = scope:recipient
+			}
+		}
+	}
+}
+
+regula_paelex_event.1033 = {
+	hidden = yes
+	type = character_event
+
+	immediate = {
+		scope:recipient = {
+			if = {
+				limit = { has_trait = infertile }
+				remove_trait = infertile
+			}
+			if = {
+				limit = { has_trait = early_great_pox }
+				remove_trait = early_great_pox
+			}
+			if = {
+				limit = { has_trait = lovers_pox }
+				remove_trait = lovers_pox
+			}
+			if = {
+				limit = { has_trait = chaste }
+				remove_trait = chaste
+				add_trait = lustful
+			}
+			if = {
+				limit = { has_trait = infertile }
+				remove_trait = infertile
+				add_trait = fecund
+			}
+			if = {
+				limit = { NOT = { has_trait = fecund } }
+				add_trait = fecund
+			}
+			if = {
+				limit = { NOT = { has_trait = lustful } }
+				add_trait = lustful
+			}			if = {
+				limit = { has_trait = beauty_good_1 }
+				remove_trait = beauty_good_1
+				add_trait = beauty_good_3
+			}
+			if = {
+				limit = { has_trait = beauty_good_2 }
+				remove_trait = beauty_good_2
+				add_trait = beauty_good_3
+			}
+			if = {
+				limit = { has_trait = beauty_bad_1 }
+				remove_trait = beauty_bad_1
+				add_trait = beauty_good_1
+			}
+			if = {
+				limit = { has_trait = beauty_bad_3 }
+				remove_trait = beauty_bad_3
+				add_trait = beauty_bad_1
+			}
+			if = {
+				limit = { has_trait = beauty_bad_2 }
+				remove_trait = beauty_bad_2
+			}
+			if = {
+				limit = {
+					NOR = {
+						has_trait = beauty_bad_1
+						has_trait = beauty_bad_2
+						has_trait = beauty_bad_3
+						has_trait = beauty_good_1
+						has_trait = beauty_good_2
+						has_trait = beauty_good_3
+					}
+				}
+				scope:recipient = {
+					add_trait = beauty_good_1
+				}
+			}
+			make_pregnant = {
+				father = scope:magister
+				number_of_children = 3
+			}
+			add_trait = regula_undying
+			set_immortal_age = 22
+			set_sexuality = bisexual
+		}
+		scope:actor = {
+			send_interface_message = {  # Tells the player the outcome.
+				type = event_spouse_task_good
+				title = regula_make_paelex_outcome_large_boost.t
+				desc = {
+					triggered_desc = {
+						trigger = {
+							scope:recipient = {
+								is_spouse_of = scope:actor
+							}
+						}
+						desc = regula_make_paelex_outcome_domina_large_boost.desc
+					}
+					triggered_desc = {
+						trigger = {
+							scope:recipient = {
+								is_concubine_of = scope:actor
+							}
+						}
+						desc = regula_make_paelex_outcome_large_boost.desc
+					}
+				}
+				right_icon = scope:recipient
+			}
+		}
+	}
+}
+
+### Make a landed wife a domina.
+regula_paelex_event.2000 ={
+	type = character_event
+	title = regula_paelex_event.2000.t
+	desc = regula_paelex_event.2000.desc
+	theme = faith
+	override_background = {
+		event_background = godless_shrine  # Background: https://www.artstation.com/julesmartinvos
+	}
+
+	right_portrait = {
+		character = scope:recipient
+    	animation = personality_zealous
+	}
+
+	immediate = {
+		make_concubine = scope:recipient 
+		scope:recipient = {
+			set_sexuality = bisexual
+			add_character_flag = {
+				flag = is_naked
+				days = 180
+			}
+		}
+	}
+
+	option = {
+		name = regula_paelex_event.1000.b # Push power into her body. Increased beauty, reduction in apparent age.
+		trigger_event = {
+			on_action = regula_vassal_paelex_initiation_2
+		}
+	}
+	option = {
+		name = regula_paelex_event.1000.a # Drive the power into her mind. Increased mental traits, may bump up lifestyle trait.
+		trigger_event = {
+			on_action = regula_vassal_paelex_initiation_1
+		}
+	}
+	option = {
+		name = regula_paelex_event.1000.c # Mix power with your seed. Inheritable traits and pregnancy.
+		trigger_event = {
+			on_action = regula_vassal_paelex_initiation_3
+		}
+	}
+	option = {
+		name = regula_paelex_event.1000.d # Take power for yourself.
+		add_piety = 250
+	}
+	after = {
+		scope:recipient = {
+			remove_character_flag = is_naked
+		}
+	}
+}

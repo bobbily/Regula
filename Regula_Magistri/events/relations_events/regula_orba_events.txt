@@ -1,0 +1,42 @@
+﻿namespace = regula_orba_event
+
+# 0001 - 0999: Creation of Orbae.
+# 1000 - 1999: Conversion of Orbae to paelices, etc. 
+
+# Removes paelex or domina traits from those cast from the concubinage.
+regula_orba_event.0001 = {
+	hidden = yes
+	type = character_event
+
+	trigger = {
+		OR = {
+			has_trait = paelex
+			has_trait = domina
+		}
+		NOT = {
+			any_consort = {
+				has_trait = magister_trait_group
+			}
+		}
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				has_trait = paelex
+			}
+			remove_trait = paelex
+		}
+		if = {
+			limit = {
+				has_trait = domina
+			}
+			remove_trait = domina
+		}
+		add_trait = orba
+		random = {
+			chance = 25
+			add_trait = depressed_1
+		}
+	}
+}

@@ -1,12 +1,27 @@
-﻿# Set inheritance laws quarterly.
-quarterly_playable_pulse = {
-	events = {
-		regula_vassal_event.0999 #Implement vassal realm law.
-	}
-}
-# Passes on the Magister traits.
+﻿# Passes on the Magister traits.
 quarterly_playable_pulse = {
 	events = {
 		regula_initialize_event.0010
+	}
+}
+
+# Converts adrift paelices to orbae.
+quarterly_playable_pulse = {
+	events = {
+		regula_orba_event.0001
+	}
+}
+
+# Adds landed concubine bonuses.
+quarterly_playable_pulse = {
+	events = {
+		regula_paelex_event.0998 
+	}
+}
+
+# Set inheritance laws quarterly.
+quarterly_playable_pulse = {
+	events = {
+		regula_paelex_event.0999 
 	}
 }

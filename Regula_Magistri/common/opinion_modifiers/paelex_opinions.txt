@@ -1,0 +1,6 @@
+﻿
+demoted_domina_opinion = {
+    opinion = -20
+    decaying = yes
+    years = 5
+}
