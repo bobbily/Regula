@@ -1,5 +1,4 @@
 # Regula Magistri
-
 A mind-control "Haremocracy" mod for Crusader Kings 3.
 
 [LoversLab Page] (https://www.loverslab.com/topic/157067-mod-regula-magestri/)
@@ -7,7 +6,6 @@ A mind-control "Haremocracy" mod for Crusader Kings 3.
 [Git-Hub] (https://github.com/bobbily/Regula)
 
 ## Overview
-
 This mod creates a number of traits, events, schemes, and interactions based around the Player's interaction with the Regula Magistri (Rule of the Master). The intent of these is to create a state headed by a single (male) ruler and his female vassal concubines. 
 
 
@@ -27,12 +25,10 @@ A number of under the hood interactions. Notably, women who leave the concubinag
 
 
 ## Requirements
-
 At present this mod is standalone.
 
 
 ## Incompatibilities
-
 This mod will conflict with anything that modifies gender succession laws or religious tenets. Otherwise it should run alongside anything up to and including total conversion mods (not extensively tested).
 
 This version is not compatible with Regula Magestri 0.1 saves.
@@ -46,6 +42,8 @@ Add "Regula Magistri" to your mod playset.
 ## Known Bugs
 Concubines can't inherit titles.
 
+## Contributing
+If you are interested in contributing, please get in touch at the links above. Assistance with art or event dialogue would be greatly appreciated.
 
 ## Change notes
 0.2
@@ -55,13 +53,6 @@ Added the Domitans Tribunal interaction, which recruits landed vassals into your
 Added the Favens paelex and Demitte domina interactions, to promote and demote concubines.
 Added Magister and Devoted tenets.
 Added re-initiation events, to add some effects when a PC dies.
-
-
-
-## Contributing
-
-If you are interested in contributing, please get in touch at the links above. Assistance with art or event dialogue would be greatly appreciated.
-
 
 ## Sources
 [Title image] (https://www.flickr.com/photos/peterscherub/26640204103/in/dateposted-ff/) - CC BY 2.0
